@@ -331,6 +331,32 @@ textarea{
   cursor:pointer;
 }
 
+.continue-button{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.history-button{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:10px;
+  background:#111827;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+  cursor:pointer;
+}
+
 .empty{
   text-align:center;
   color:#6b7280;
@@ -359,20 +385,92 @@ textarea{
   color:white;
 }
 
+/* =========================
+   HISTORIAL
+========================= */
+
+.history-panel{
+  display:none;
+  margin-top:15px;
+}
+
+.history-panel.open{
+  display:block;
+}
+
+.history-item{
+  background:#f9fafb;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
+}
+
+.history-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.history-title{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.history-date{
+  color:#6b7280;
+  font-size:13px;
+  margin-top:4px;
+}
+
+.history-details{
+  margin-top:10px;
+  line-height:1.5;
+  font-size:15px;
+}
+
+.history-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.history-view-button{
+  background:#2563eb;
+}
+
+.history-delete-button{
+  background:#374151;
+}
+
+.history-empty{
+  text-align:center;
+  color:#6b7280;
+  padding:15px;
+}
+
 #printArea{
   display:none;
 }
 
 @media(max-width:500px){
+
   .menu-grid,
   .bread-list,
   .option-list,
   .choice-grid{
     grid-template-columns:1fr;
   }
+
+  .history-buttons{
+    flex-direction:column;
+  }
+
 }
 
 @media print{
+
   body{
     background:white;
   }
@@ -400,6 +498,7 @@ textarea{
     border-top:1px dashed black;
     margin:10px 0;
   }
+
 }
 </style>
 </head>
@@ -736,18 +835,40 @@ textarea{
     </div>
 
 
+    <!-- CONTINUAR PEDIDO AZUL -->
     <button
-      class="print-button"
+      class="continue-button"
       onclick="continueOrder()">
       ➕ CONTINUAR PEDIDO
     </button>
 
 
+    <!-- IMPRIMIR NEGRO -->
     <button
       class="print-button"
       onclick="printOrder()">
       🖨️ IMPRIMIR PEDIDO COMPLETO
     </button>
+
+
+    <!-- HISTORIAL NEGRO Y ÚLTIMO -->
+    <button
+      class="history-button"
+      onclick="showOrderHistory()">
+      📋 HISTORIAL DE PEDIDOS
+    </button>
+
+
+    <!-- HISTORIAL -->
+    <div
+      id="historyPanel"
+      class="history-panel">
+
+      <h2>📋 Historial de pedidos</h2>
+
+      <div id="historyList"></div>
+
+    </div>
 
   </div>
 
@@ -982,8 +1103,15 @@ const categories = [
 
 let order = [];
 
+let orderHistory =
+  JSON.parse(
+    localStorage.getItem("orderHistory") || "[]"
+  );
+
 let orderNumber =
-  Number(localStorage.getItem("orderNumber") || 0) + 1;
+  Number(
+    localStorage.getItem("orderNumber") || 0
+  ) + 1;
 
 localStorage.setItem(
   "orderNumber",
@@ -991,6 +1119,7 @@ localStorage.setItem(
 );
 
 let currentSandwich = {
+
   bread:"",
   cheese:{},
   meat:{},
@@ -998,15 +1127,18 @@ let currentSandwich = {
   sauce:{},
   vegetables:{},
   notes:""
+
 };
 
 let currentCustom = {
+
   meat:{},
   rice:{},
   potato:{},
   beans:{},
   sides:{},
   tortillas:{}
+
 };
 
 let selectedSoup = "";
@@ -1125,8 +1257,6 @@ function createOptions(
 
     };
 
-
-    /* Toda la tarjeta agrega una unidad al tocarla. */
 
     row.onclick = () =>
       changeState(
@@ -1392,17 +1522,11 @@ function addSandwich(){
   const details = {
 
     bread:s.bread,
-
     cheese:s.cheese,
-
     meat:s.meat,
-
     eggs:s.eggs,
-
     sauce:s.sauce,
-
     vegetables:s.vegetables,
-
     notes:s.notes
 
   };
@@ -1430,17 +1554,11 @@ function clearCurrentSandwich(){
   currentSandwich = {
 
     bread:"",
-
     cheese:{},
-
     meat:{},
-
     eggs:{},
-
     sauce:{},
-
     vegetables:{},
-
     notes:""
 
   };
@@ -1561,15 +1679,10 @@ function clearCustom(){
   currentCustom = {
 
     meat:{},
-
     rice:{},
-
     potato:{},
-
     beans:{},
-
     sides:{},
-
     tortillas:{}
 
   };
@@ -1691,8 +1804,6 @@ function renderOrder(){
   c.innerHTML = "";
 
 
-  /* Los tacos se muestran juntos como una sola sección. */
-
   const tacos = [];
 
 
@@ -1780,6 +1891,7 @@ function renderOrder(){
         }
 
       }
+
       else if(
         it.type ===
         "Menú personalizable"
@@ -1835,6 +1947,7 @@ function renderOrder(){
         }
 
       }
+
       else if(
         it.type === "Sopa"
       ){
@@ -1859,6 +1972,7 @@ function renderOrder(){
         }
 
       }
+
       else{
 
         details =
@@ -2214,7 +2328,9 @@ function createStandardList(
         let n = 0;
 
 
-        minus.onclick = () => {
+        minus.onclick = (e) => {
+
+          e.stopPropagation();
 
           n =
             Math.max(
@@ -2235,7 +2351,9 @@ function createStandardList(
         };
 
 
-        plus.onclick = () => {
+        plus.onclick = (e) => {
+
+          e.stopPropagation();
 
           n =
             Math.min(
@@ -2270,7 +2388,9 @@ function createStandardList(
           "Agregar";
 
 
-        add.onclick = () => {
+        add.onclick = (e) => {
+
+          e.stopPropagation();
 
           if(n > 0){
 
@@ -2349,6 +2469,517 @@ function continueOrder(){
     });
 
   }
+
+}
+
+
+/* =========================
+   HISTORIAL
+========================= */
+
+function saveOrderToHistory(){
+
+  if(!order.length){
+    return;
+  }
+
+
+  const customerName =
+    document
+      .getElementById(
+        "customerName"
+      )
+      .value
+      .trim();
+
+
+  const customerPhone =
+    document
+      .getElementById(
+        "customerPhone"
+      )
+      .value
+      .trim();
+
+
+  const historyOrder = {
+
+    orderNumber,
+
+    date:
+      new Date().toLocaleString(
+        "es-US",
+        {
+          dateStyle:"short",
+          timeStyle:"short"
+        }
+      ),
+
+    customerName:
+      customerName ||
+      "Sin nombre",
+
+    customerPhone:
+      customerPhone ||
+      "Sin teléfono",
+
+    items:
+      JSON.parse(
+        JSON.stringify(
+          order
+        )
+      )
+
+  };
+
+
+  orderHistory.unshift(
+    historyOrder
+  );
+
+
+  if(
+    orderHistory.length > 100
+  ){
+
+    orderHistory =
+      orderHistory.slice(
+        0,
+        100
+      );
+
+  }
+
+
+  localStorage.setItem(
+    "orderHistory",
+    JSON.stringify(
+      orderHistory
+    )
+  );
+
+}
+
+
+function showOrderHistory(){
+
+  const panel =
+    document.getElementById(
+      "historyPanel"
+    );
+
+
+  if(
+    panel.classList.contains(
+      "open"
+    )
+  ){
+
+    panel.classList.remove(
+      "open"
+    );
+
+    return;
+
+  }
+
+
+  panel.classList.add(
+    "open"
+  );
+
+
+  renderOrderHistory();
+
+
+  panel.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+function renderOrderHistory(){
+
+  const container =
+    document.getElementById(
+      "historyList"
+    );
+
+
+  if(
+    !orderHistory.length
+  ){
+
+    container.innerHTML = `
+      <div class="history-empty">
+        Todavía no hay pedidos guardados.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML = "";
+
+
+  orderHistory.forEach(
+    (saved,index) => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "history-item";
+
+
+      let products = "";
+
+
+      saved.items.forEach(
+        product => {
+
+          products += `
+            <div>
+              <strong>
+                ${product.quantity} ×
+                ${esc(product.name)}
+              </strong>
+            </div>
+          `;
+
+
+          if(
+            product.type ===
+            "Sándwich"
+          ){
+
+            products += `
+              <div>
+                Pan:
+                ${esc(
+                  product.details.bread
+                )}
+              </div>
+            `;
+
+
+            products +=
+              historyCategory(
+                "Queso",
+                product.details.cheese
+              );
+
+
+            products +=
+              historyCategory(
+                "Carne",
+                product.details.meat
+              );
+
+
+            products +=
+              historyCategory(
+                "Huevos",
+                product.details.eggs
+              );
+
+
+            products +=
+              historyCategory(
+                "Salsas",
+                product.details.sauce
+              );
+
+
+            products +=
+              historyCategory(
+                "Vegetales",
+                product.details.vegetables
+              );
+
+          }
+
+
+          else if(
+            product.type ===
+            "Menú personalizable"
+          ){
+
+            products +=
+              historyCategory(
+                "Carnes",
+                product.details.meat
+              );
+
+
+            products +=
+              historyCategory(
+                "Arroz",
+                product.details.rice
+              );
+
+
+            products +=
+              historyCategory(
+                "Papa",
+                product.details.potato
+              );
+
+
+            products +=
+              historyCategory(
+                "Frijol",
+                product.details.beans
+              );
+
+
+            products +=
+              historyCategory(
+                "Otros",
+                product.details.sides
+              );
+
+
+            products +=
+              historyCategory(
+                "Tortillas",
+                product.details.tortillas
+              );
+
+          }
+
+
+          else if(
+            product.type ===
+            "Sopa"
+          ){
+
+            products += `
+              <div>
+                Sopa:
+                ${esc(
+                  product.details.soup
+                )}
+              </div>
+            `;
+
+          }
+
+        }
+      );
+
+
+      item.innerHTML = `
+
+        <div class="history-header">
+
+          <div>
+
+            <div class="history-title">
+              Pedido #${saved.orderNumber}
+            </div>
+
+            <div class="history-date">
+              ${esc(saved.date)}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="history-details">
+
+          <strong>Cliente:</strong>
+          ${esc(saved.customerName)}
+
+          <br>
+
+          <strong>Teléfono:</strong>
+          ${esc(saved.customerPhone)}
+
+          <br><br>
+
+          ${products}
+
+        </div>
+
+        <div class="history-buttons">
+
+          <button
+            class="small-button history-view-button"
+            onclick="loadHistoryOrder(${index})">
+            Cargar pedido
+          </button>
+
+          <button
+            class="small-button history-delete-button"
+            onclick="deleteHistoryOrder(${index})">
+            Eliminar
+          </button>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+function historyCategory(
+  title,
+  items
+){
+
+  if(!items){
+    return "";
+  }
+
+
+  const values =
+    Object.entries(items)
+      .filter(
+        x => x[1] > 0
+      );
+
+
+  if(!values.length){
+    return "";
+  }
+
+
+  return `
+    <div>
+      <strong>${title}:</strong>
+      ${
+        values
+          .map(
+            x =>
+              `${esc(x[0])} × ${x[1]}`
+          )
+          .join(", ")
+      }
+    </div>
+  `;
+
+}
+
+
+function deleteHistoryOrder(index){
+
+  const saved =
+    orderHistory[index];
+
+
+  if(!saved){
+    return;
+  }
+
+
+  const confirmDelete =
+    confirm(
+      "¿Eliminar el pedido #" +
+      saved.orderNumber +
+      " del historial?"
+    );
+
+
+  if(!confirmDelete){
+    return;
+  }
+
+
+  orderHistory.splice(
+    index,
+    1
+  );
+
+
+  localStorage.setItem(
+    "orderHistory",
+    JSON.stringify(
+      orderHistory
+    )
+  );
+
+
+  renderOrderHistory();
+
+}
+
+
+function loadHistoryOrder(index){
+
+  const saved =
+    orderHistory[index];
+
+
+  if(!saved){
+    return;
+  }
+
+
+  const confirmLoad =
+    confirm(
+      "¿Cargar el pedido #" +
+      saved.orderNumber +
+      " como pedido actual?"
+    );
+
+
+  if(!confirmLoad){
+    return;
+  }
+
+
+  order =
+    JSON.parse(
+      JSON.stringify(
+        saved.items
+      )
+    );
+
+
+  document.getElementById(
+    "customerName"
+  ).value =
+    saved.customerName ===
+    "Sin nombre"
+      ? ""
+      : saved.customerName;
+
+
+  document.getElementById(
+    "customerPhone"
+  ).value =
+    saved.customerPhone ===
+    "Sin teléfono"
+      ? ""
+      : saved.customerPhone;
+
+
+  renderOrder();
+
+
+  document.getElementById(
+    "orderList"
+  ).scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
 
 }
 
@@ -2612,6 +3243,10 @@ function printOrder(){
   }
 
 
+  /* Guardar automáticamente en historial. */
+  saveOrderToHistory();
+
+
   const name =
     document
       .getElementById(
@@ -2763,6 +3398,7 @@ function printOrder(){
         }
 
       }
+
       else if(
         it.type ===
         "Menú personalizable"
@@ -2824,6 +3460,7 @@ function printOrder(){
         }
 
       }
+
       else if(
         it.type === "Sopa"
       ){
@@ -2938,4 +3575,4 @@ setup();
 </script>
 
 </body>
-</html>
+</html
