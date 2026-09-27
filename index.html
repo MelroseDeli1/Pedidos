@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos - Restaurante</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      color: #222;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 13px;
+      font-size: 17px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .product {
+      background: #e5e7eb;
+    }
+
+    .product.selected {
+      background: #2563eb;
+      color: white;
+    }
+
+    .print {
+      width: 100%;
+      background: #16a34a;
+      color: white;
+      margin-top: 10px;
+    }
+
+    .new {
+      width: 100%;
+      background: #374151;
+      color: white;
+      margin-top: 10px;
+    }
+
+    #summary {
+      white-space: pre-line;
+      background: #f9fafb;
+      padding: 15px;
+      border-radius: 8px;
+      min-height: 100px;
+    }
+
+    @media (max-width: 500px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #printArea,
+      #printArea * {
+        visibility: visible;
+      }
+
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 20px;
+        font-family: monospace;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="no-print">
+  <h1>🍔 Pedidos</h1>
+  <p>Tomar pedidos por teléfono</p>
+</header>
+
+<div class="container no-print">
+
+  <div class="card">
+    <h2>Cliente</h2>
+
+    <label>Nombre</label>
+    <input id="customerName" type="text" placeholder="Nombre del cliente">
+
+    <label>Teléfono</label>
+    <input id="customerPhone" type="tel" placeholder="Teléfono">
+  </div>
+
+  <div class="card">
+    <h2>Productos</h2>
+
+    <div class="products">
+
+      <button class="product" onclick="addProduct('Hamburguesa')">
+        🍔 Hamburguesa
+      </button>
+
+      <button class="product" onclick="addProduct('Cheeseburger')">
+        🧀 Cheeseburger
+      </button>
+
+      <button class="product" onclick="addProduct('Papas')">
+        🍟 Papas
+      </button>
+
+      <button class="product" onclick="addProduct('Alitas')">
+        🍗 Alitas
+      </button>
+
+      <button class="product" onclick="addProduct('Pizza')">
+        🍕 Pizza
+      </button>
+
+      <button class="product" onclick="addProduct('Refresco')">
+        🥤 Refresco
+      </button>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ingredientes / notas</h2>
+
+    <textarea
+      id="notes"
+      rows="4"
+      placeholder="Ejemplo: sin cebolla, extra queso..."
+    ></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Pedido</h2>
+
+    <div id="summary">
+      Todavía no hay productos.
+    </div>
+
+    <button class="print" onclick="printOrder()">
+      🖨️ IMPRIMIR PEDIDO
+    </button>
+
+    <button class="new" onclick="newOrder()">
+      ➕ NUEVO PEDIDO
+    </button>
+  </div>
+
+</div>
+
+<div id="printArea"></div>
+
+<script>
+
+  let order = [];
+
+  let orderNumber =
+    Number(localStorage.getItem("orderNumber") || 0) + 1;
+
+  localStorage.setItem("orderNumber", orderNumber);
+
+  function addProduct(product) {
+
+    order.push(product);
+
+    updateSummary();
+
+  }
+
+  function updateSummary() {
+
+    const summary = document.getElementById("summary");
+
+    if (order.length === 0) {
+      summary.textContent = "Todavía no hay productos.";
+      return;
+    }
+
+    let text = "";
+
+    order.forEach((item, index) => {
+      text += (index + 1) + ". " + item + "\n";
+    });
+
+    summary.textContent = text;
+  }
+
+  function printOrder() {
+
+    const name =
+      document.getElementById("customerName").value || "Sin nombre";
+
+    const phone =
+      document.getElementById("customerPhone").value || "Sin teléfono";
+
+    const notes =
+      document.getElementById("notes").value || "Sin notas";
+
+    if (order.length === 0) {
+      alert("Agrega por lo menos un producto.");
+      return;
+    }
+
+    let products = "";
+
+    order.forEach((item, index) => {
+      products +=
+        (index + 1) + ". " + item + "<br>";
+    });
+
+    document.getElementById("printArea").innerHTML = `
+      <h2>PEDIDO #${orderNumber}</h2>
+
+      <hr>
+
+      <strong>CLIENTE:</strong><br>
+      ${name}<br><br>
+
+      <strong>TELÉFONO:</strong><br>
+      ${phone}<br><br>
+
+      <strong>PEDIDO:</strong><br>
+      ${products}
+
+      <br>
+
+      <strong>NOTAS:</strong><br>
+      ${notes}
+
+      <hr>
+
+      <p>Pedido recibido por teléfono</p>
+    `;
+
+    window.print();
+  }
+
+  function newOrder() {
+
+    order = [];
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("notes").value = "";
+
+    updateSummary();
+
+    orderNumber++;
+
+    localStorage.setItem("orderNumber", orderNumber);
+  }
+
+</script>
+
+</body>
+</html>
