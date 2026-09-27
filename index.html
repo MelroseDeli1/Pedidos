@@ -3,292 +3,341 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedidos - Sandwiches</title>
+<title>Pedidos - Menú</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  color:#111827;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f4f6;
-  color: #111827;
+header{
+  background:#111827;
+  color:white;
+  padding:20px 15px;
+  text-align:center;
 }
 
-header {
-  background: #111827;
-  color: white;
-  padding: 20px 15px;
-  text-align: center;
+header h1{
+  margin:0;
+  font-size:28px;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 28px;
+header p{
+  margin:6px 0 0;
+  color:#d1d5db;
 }
 
-header p {
-  margin: 6px 0 0;
-  color: #d1d5db;
+.container{
+  max-width:850px;
+  margin:auto;
+  padding:15px;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 15px;
+.card{
+  background:white;
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-.card {
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+h2{
+  margin-top:0;
 }
 
-h2 {
-  margin-top: 0;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin: 12px 0 6px;
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
 }
 
 input,
-textarea {
-  width: 100%;
-  padding: 13px;
-  font-size: 17px;
-  border: 1px solid #d1d5db;
-  border-radius: 9px;
+textarea{
+  width:100%;
+  padding:13px;
+  font-size:17px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
 }
 
-textarea {
-  resize: vertical;
+textarea{
+  resize:vertical;
 }
 
-.note {
-  color: #6b7280;
-  font-size: 14px;
-  margin-top: -5px;
+.note{
+  color:#6b7280;
+  font-size:14px;
+  margin-top:-5px;
 }
 
-.option-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
-.option-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 10px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+.menu-button{
+  padding:18px 12px;
+  border:2px solid #e5e7eb;
+  background:#f9fafb;
+  border-radius:12px;
+  font-size:17px;
+  font-weight:bold;
+  text-align:left;
+  cursor:pointer;
 }
 
-.option-name {
-  font-weight: bold;
-  flex: 1;
+.menu-button.active{
+  background:#eff6ff;
+  border-color:#2563eb;
 }
 
-.option-row.selected {
-  background: #eff6ff;
-  border-color: #2563eb;
+.panel{
+  display:none;
+  margin-top:15px;
 }
 
-.quantity {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.panel.open{
+  display:block;
 }
 
-.quantity button {
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 8px;
-  font-size: 22px;
-  font-weight: bold;
-  background: #2563eb;
-  color: white;
+.option-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-.quantity span {
-  width: 25px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
+.option-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
 }
 
-.bread-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 9px;
+.option-name{
+  font-weight:bold;
+  flex:1;
 }
 
-.bread {
-  padding: 15px 10px;
-  border: 2px solid #e5e7eb;
-  background: #f9fafb;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
+.option-row.selected{
+  background:#eff6ff;
+  border-color:#2563eb;
 }
 
-.bread.selected {
-  background: #2563eb;
-  border-color: #2563eb;
-  color: white;
+.quantity{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.add-button {
-  width: 100%;
-  padding: 17px;
-  border: 0;
-  border-radius: 10px;
-  background: #16a34a;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
+.quantity button,
+.small-button{
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
 }
 
-.clear-button {
-  width: 100%;
-  padding: 14px;
-  border: 0;
-  border-radius: 10px;
-  background: #6b7280;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 10px;
+.quantity button{
+  width:40px;
+  height:40px;
+  font-size:22px;
+  background:#2563eb;
 }
 
-.order-item {
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  padding: 14px;
-  margin-bottom: 10px;
-  background: #f9fafb;
+.quantity span{
+  width:25px;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
 }
 
-.order-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+.bread-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
 }
 
-.order-title {
-  font-size: 18px;
-  font-weight: bold;
+.bread{
+  padding:15px 10px;
+  border:2px solid #e5e7eb;
+  background:#f9fafb;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.order-details {
-  margin-top: 8px;
-  line-height: 1.5;
-  font-size: 15px;
+.bread.selected{
+  background:#2563eb;
+  border-color:#2563eb;
+  color:white;
 }
 
-.order-buttons {
-  display: flex;
-  gap: 7px;
-  margin-top: 10px;
+.add-button{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:10px;
+  background:#16a34a;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.small-button {
-  border: 0;
-  border-radius: 8px;
-  padding: 9px 14px;
-  font-size: 16px;
-  font-weight: bold;
+.clear-button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:#6b7280;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  margin-top:10px;
+  cursor:pointer;
 }
 
-.plus {
-  background: #16a34a;
-  color: white;
+.order-item{
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
+  background:#f9fafb;
 }
 
-.minus {
-  background: #dc2626;
-  color: white;
+.order-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
-.delete {
-  background: #374151;
-  color: white;
+.order-title{
+  font-size:18px;
+  font-weight:bold;
 }
 
-.print-button {
-  width: 100%;
-  padding: 17px;
-  border: 0;
-  border-radius: 10px;
-  background: #111827;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 10px;
+.order-details{
+  margin-top:8px;
+  line-height:1.5;
+  font-size:15px;
 }
 
-.empty {
-  text-align: center;
-  color: #6b7280;
-  padding: 15px;
+.order-buttons{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
 }
 
-.section-title {
-  margin-top: 25px;
-  margin-bottom: 10px;
-  font-size: 20px;
+.small-button{
+  padding:9px 14px;
+  font-size:16px;
 }
 
-#printArea {
-  display: none;
+.plus{
+  background:#16a34a;
 }
 
-@media(max-width:500px) {
-  .bread-list {
-    grid-template-columns: 1fr;
+.minus{
+  background:#dc2626;
+}
+
+.delete{
+  background:#374151;
+}
+
+.print-button{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:10px;
+  background:#111827;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.empty{
+  text-align:center;
+  color:#6b7280;
+  padding:15px;
+}
+
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.choice{
+  padding:15px 10px;
+  border:2px solid #e5e7eb;
+  background:#f9fafb;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.choice.selected{
+  background:#2563eb;
+  border-color:#2563eb;
+  color:white;
+}
+
+#printArea{
+  display:none;
+}
+
+@media(max-width:500px){
+  .menu-grid,
+  .bread-list,
+  .choice-grid{
+    grid-template-columns:1fr;
   }
 }
 
-@media print {
-
-  body {
-    background: white;
+@media print{
+  body{
+    background:white;
   }
 
-  body > * {
-    display: none !important;
+  body>*{
+    display:none!important;
   }
 
-  #printArea {
-    display: block !important;
-    width: 100%;
-    padding: 8px;
-    font-family: monospace;
-    font-size: 14px;
-    color: black;
+  #printArea{
+    display:block!important;
+    width:100%;
+    padding:8px;
+    font-family:monospace;
+    font-size:14px;
+    color:black;
   }
 
-  #printArea h1 {
-    text-align: center;
-    font-size: 20px;
+  #printArea h1{
+    text-align:center;
+    font-size:20px;
   }
 
-  #printArea hr {
-    border: 0;
-    border-top: 1px dashed black;
-    margin: 10px 0;
+  #printArea hr{
+    border:0;
+    border-top:1px dashed black;
+    margin:10px 0;
   }
 }
 </style>
@@ -298,187 +347,261 @@ textarea {
 
 <header>
   <h1>🥪 PEDIDOS</h1>
-  <p>Crear sándwich personalizado</p>
+  <p>Menú completo</p>
 </header>
 
 <div class="container">
 
-<!-- CLIENTE -->
+  <!-- CLIENTE -->
+  <div class="card">
+    <h2>👤 Cliente</h2>
 
-<div class="card">
+    <label>Nombre</label>
+    <input
+      id="customerName"
+      type="text"
+      placeholder="Nombre del cliente"
+    >
 
-<h2>👤 Cliente</h2>
+    <label>Teléfono</label>
+    <input
+      id="customerPhone"
+      type="tel"
+      placeholder="Teléfono"
+    >
+  </div>
 
-<label>Nombre</label>
-<input id="customerName" type="text" placeholder="Nombre del cliente">
 
-<label>Teléfono</label>
-<input id="customerPhone" type="tel" placeholder="Teléfono">
+  <!-- CATEGORÍAS -->
+  <div class="card">
+    <h2>🧾 ¿Qué desea ordenar?</h2>
+
+    <p class="note">
+      Seleccione una categoría para desplegar sus opciones.
+      Todo se agrega al mismo pedido.
+    </p>
+
+    <div class="menu-grid" id="menuCategories"></div>
+  </div>
+
+
+  <!-- SANDWICHES -->
+  <div class="card panel" id="panel-sandwiches">
+
+    <h2>🥪 Sándwiches</h2>
+
+    <p class="note">
+      Personaliza el sándwich. Puede elegir cantidades de cada ingrediente.
+    </p>
+
+    <h3>🥖 Pan</h3>
+
+    <div class="bread-list" id="breadList">
+
+      <button class="bread"
+        onclick="selectBread('Pan blanco',this)">
+        Pan blanco
+      </button>
+
+      <button class="bread"
+        onclick="selectBread('Pan integral',this)">
+        Pan integral
+      </button>
+
+      <button class="bread"
+        onclick="selectBread('Bagel',this)">
+        Bagel
+      </button>
+
+      <button class="bread"
+        onclick="selectBread('Hero',this)">
+        Hero
+      </button>
+
+      <button class="bread"
+        onclick="selectBread('Roll',this)">
+        Roll
+      </button>
+
+      <button class="bread"
+        onclick="selectBread('Rey Bread',this)">
+        Rey Bread
+      </button>
+
+      <button class="bread"
+        onclick="selectBread('Arpa',this)">
+        Arpa
+      </button>
+
+    </div>
+
+    <h3>🧀 Queso</h3>
+    <div id="cheeseList" class="option-list"></div>
+
+    <h3>🥩 Carne</h3>
+    <div id="meatList" class="option-list"></div>
+
+    <h3>🍳 Huevos</h3>
+    <div id="eggList" class="option-list"></div>
+
+    <h3>🥫 Salsas</h3>
+    <div id="sauceList" class="option-list"></div>
+
+    <h3>🥬 Vegetales</h3>
+    <div id="vegetableList" class="option-list"></div>
+
+    <label>📝 Notas del sándwich</label>
+
+    <textarea
+      id="sandwichNotes"
+      rows="3"
+      placeholder="Ejemplo: cortar a la mitad, salsa aparte..."
+    ></textarea>
+
+    <button
+      class="add-button"
+      onclick="addSandwich()">
+      ➕ AGREGAR SÁNDWICH AL PEDIDO
+    </button>
+
+    <button
+      class="clear-button"
+      onclick="clearCurrentSandwich()">
+      🔄 LIMPIAR SÁNDWICH ACTUAL
+    </button>
+
+  </div>
+
+
+  <!-- MENÚ PERSONALIZABLE -->
+  <div class="card panel" id="panel-custom">
+
+    <h2>🍽️ Menú personalizable</h2>
+
+    <p class="note">
+      Combine las opciones que desee.
+      Puede elegir cantidades de cada categoría.
+    </p>
+
+    <h3>🥩 Carnes</h3>
+    <div id="customMeat" class="option-list"></div>
+
+    <h3>🍚 Arroz</h3>
+    <div id="customRice" class="option-list"></div>
+
+    <h3>🥔 Papa</h3>
+    <div id="customPotato" class="option-list"></div>
+
+    <h3>🫘 Frijol</h3>
+    <div id="customBeans" class="option-list"></div>
+
+    <h3>🍌 Otros acompañantes</h3>
+    <div id="customSides" class="option-list"></div>
+
+    <h3>🫓 Tortillas</h3>
+    <div id="customTortillas" class="option-list"></div>
+
+    <label>📝 Notas</label>
+
+    <textarea
+      id="customNotes"
+      rows="3"
+      placeholder="Notas especiales..."
+    ></textarea>
+
+    <button
+      class="add-button"
+      onclick="addCustomMeal()">
+      ➕ AGREGAR AL PEDIDO
+    </button>
+
+    <button
+      class="clear-button"
+      onclick="clearCustom()">
+      🔄 LIMPIAR
+    </button>
+
+  </div>
+
+
+  <!-- SOPAS -->
+  <div class="card panel" id="panel-soups">
+
+    <h2>🍲 Sopas</h2>
+
+    <p class="note">
+      Seleccione una opción de sopa.
+    </p>
+
+    <div id="soupChoices" class="choice-grid"></div>
+
+    <label>📝 Notas</label>
+
+    <textarea
+      id="soupNotes"
+      rows="2"
+      placeholder="Notas especiales..."
+    ></textarea>
+
+    <button
+      class="add-button"
+      onclick="addSoup()">
+      ➕ AGREGAR SOPA AL PEDIDO
+    </button>
+
+  </div>
+
+
+  <!-- PRODUCTOS -->
+  <div class="card panel" id="panel-products">
+
+    <h2 id="productsTitle"></h2>
+
+    <p class="note">
+      Seleccione la cantidad.
+    </p>
+
+    <div
+      id="productsList"
+      class="option-list">
+    </div>
+
+  </div>
+
+
+  <!-- PEDIDO -->
+  <div class="card">
+
+    <h2>🧾 Pedido actual</h2>
+
+    <div id="orderList">
+      <div class="empty">
+        Todavía no hay productos.
+      </div>
+    </div>
+
+    <button
+      class="print-button"
+      onclick="printOrder()">
+      🖨️ IMPRIMIR PEDIDO COMPLETO
+    </button>
+
+  </div>
 
 </div>
-
-
-<!-- PAN -->
-
-<div class="card">
-
-<h2>🥖 1. Pan</h2>
-
-<p class="note">Selecciona un solo tipo de pan.</p>
-
-<div class="bread-list">
-
-<button class="bread" onclick="selectBread('Pan blanco', this)">
-Pan blanco
-</button>
-
-<button class="bread" onclick="selectBread('Pan integral', this)">
-Pan integral
-</button>
-
-<button class="bread" onclick="selectBread('Bagel', this)">
-Bagel
-</button>
-
-<button class="bread" onclick="selectBread('Hero', this)">
-Hero
-</button>
-
-<button class="bread" onclick="selectBread('Roll', this)">
-Roll
-</button>
-
-<button class="bread" onclick="selectBread('Rey Bread', this)">
-Rey Bread
-</button>
-
-<button class="bread" onclick="selectBread('Arpa', this)">
-Arpa
-</button>
-
-</div>
-
-</div>
-
-
-<!-- QUESO -->
-
-<div class="card">
-
-<h2>🧀 2. Queso</h2>
-
-<p class="note">
-Usa + y − para indicar la cantidad.
-</p>
-
-<div id="cheeseList" class="option-list"></div>
-
-</div>
-
-
-<!-- CARNE -->
-
-<div class="card">
-
-<h2>🥩 3. Carne</h2>
-
-<div id="meatList" class="option-list"></div>
-
-</div>
-
-
-<!-- HUEVOS -->
-
-<div class="card">
-
-<h2>🍳 4. Huevos</h2>
-
-<div id="eggList" class="option-list"></div>
-
-</div>
-
-
-<!-- SALSAS -->
-
-<div class="card">
-
-<h2>🥫 5. Salsas</h2>
-
-<div id="sauceList" class="option-list"></div>
-
-</div>
-
-
-<!-- VEGETALES -->
-
-<div class="card">
-
-<h2>🥬 6. Vegetales</h2>
-
-<div id="vegetableList" class="option-list"></div>
-
-</div>
-
-
-<!-- NOTAS -->
-
-<div class="card">
-
-<h2>📝 Notas del sándwich</h2>
-
-<textarea
-id="sandwichNotes"
-rows="3"
-placeholder="Ejemplo: cortar a la mitad, salsa aparte..."
-></textarea>
-
-</div>
-
-
-<!-- AGREGAR -->
-
-<div class="card">
-
-<button class="add-button" onclick="addSandwich()">
-➕ AGREGAR SÁNDWICH AL PEDIDO
-</button>
-
-<button class="clear-button" onclick="clearCurrentSandwich()">
-🔄 LIMPIAR SÁNDWICH ACTUAL
-</button>
-
-</div>
-
-
-<!-- PEDIDO -->
-
-<div class="card">
-
-<h2>🧾 Pedido actual</h2>
-
-<div id="orderList">
-<div class="empty">
-Todavía no hay sándwiches.
-</div>
-</div>
-
-<button class="print-button" onclick="printOrder()">
-🖨️ IMPRIMIR PEDIDO COMPLETO
-</button>
-
-</div>
-
-</div>
-
 
 <div id="printArea"></div>
 
 
 <script>
 
+/* =========================
+   OPCIONES DEL SÁNDWICH
+========================= */
+
 const menu = {
 
-  cheese: [
+  cheese:[
     "Cheddar",
     "Mozzarella",
     "American Cheese",
@@ -488,7 +611,7 @@ const menu = {
     "Queso Fresco"
   ],
 
-  meat: [
+  meat:[
     "Turkey",
     "Bacon",
     "Roast Beef",
@@ -505,14 +628,14 @@ const menu = {
     "Bologna"
   ],
 
-  eggs: [
+  eggs:[
     "Eggs",
     "Egg Whites",
     "Over Medium",
     "Over Easy"
   ],
 
-  sauce: [
+  sauce:[
     "Red Hot Sauce",
     "Green Hot Sauce",
     "Ketchup",
@@ -522,7 +645,7 @@ const menu = {
     "Oil and Vinegar"
   ],
 
-  vegetables: [
+  vegetables:[
     "Tomato",
     "Red Onions",
     "White Onions",
@@ -534,48 +657,230 @@ const menu = {
 };
 
 
-let currentSandwich = {
+/* =========================
+   MENÚ PERSONALIZABLE
+========================= */
 
-  bread: "",
+const customMenu = {
 
-  cheese: {},
-  meat: {},
-  eggs: {},
-  sauce: {},
-  vegetables: {},
+  meat:[
+    "Steak",
+    "Rotisserie Chicken",
+    "Fried Chicken",
+    "Chicken Stew",
+    "Steak Stew",
+    "Pernil",
+    "Chicharron",
+    "Ribs",
+    "Pork"
+  ],
 
-  notes: ""
+  rice:[
+    "White Rice",
+    "Yellow Rice"
+  ],
+
+  potato:[
+    "Pure",
+    "French Fries",
+    "Steak Fries",
+    "Hash Brown",
+    "Home Fries"
+  ],
+
+  beans:[
+    "Frijol Negro",
+    "Pinto",
+    "Molido"
+  ],
+
+  sides:[
+    "Platano",
+    "Macaroni & Cheese",
+    "Chicle Scabech"
+  ],
+
+  tortillas:[
+    "Tortillas"
+  ]
 
 };
 
 
-let order = [];
+/* =========================
+   CATEGORÍAS
+========================= */
 
+const categories = [
+
+  {
+    id:"sandwiches",
+    label:"🥪 Sándwiches",
+    panel:"panel-sandwiches"
+  },
+
+  {
+    id:"tacos",
+    label:"🌮 Tacos",
+    panel:"panel-products",
+    title:"🌮 Tacos",
+    items:[
+      "Steak",
+      "Chicken",
+      "Chorizo",
+      "Lengua",
+      "Birria"
+    ]
+  },
+
+  {
+    id:"custom",
+    label:"🍽️ Menú personalizable",
+    panel:"panel-custom"
+  },
+
+  {
+    id:"pancakes",
+    label:"🥞 Pancakes",
+    panel:"panel-products",
+    title:"🥞 Pancakes",
+    items:["Pancakes"]
+  },
+
+  {
+    id:"pupusas",
+    label:"🫓 Pupusas",
+    panel:"panel-products",
+    title:"🫓 Pupusas",
+    items:["Pupusas"]
+  },
+
+  {
+    id:"oatmeal",
+    label:"🥣 Oatmeal",
+    panel:"panel-products",
+    title:"🥣 Oatmeal",
+    items:["Oatmeal"]
+  },
+
+  {
+    id:"atole",
+    label:"🥣 Atole",
+    panel:"panel-products",
+    title:"🥣 Atole",
+    items:["Atole"]
+  },
+
+  {
+    id:"omelette",
+    label:"🍳 Western Omelette",
+    panel:"panel-products",
+    title:"🍳 Western Omelette",
+    items:["Western Omelette"]
+  },
+
+  {
+    id:"soups",
+    label:"🍲 Soups",
+    panel:"panel-soups"
+  },
+
+  {
+    id:"enchiladas",
+    label:"🌯 Enchiladas",
+    panel:"panel-products",
+    title:"🌯 Enchiladas",
+    items:["Enchiladas"]
+  },
+
+  {
+    id:"bucket",
+    label:"🍗 Bucket of Fried Chicken",
+    panel:"panel-products",
+    title:"🍗 Bucket of Fried Chicken",
+    items:["Bucket of Fried Chicken"]
+  },
+
+  {
+    id:"tortillas",
+    label:"🫓 Tortillas",
+    panel:"panel-products",
+    title:"🫓 Tortillas",
+    items:["Tortillas"]
+  }
+
+];
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let order = [];
 
 let orderNumber =
   Number(localStorage.getItem("orderNumber") || 0) + 1;
-
 
 localStorage.setItem(
   "orderNumber",
   orderNumber
 );
 
+let currentSandwich = {
+  bread:"",
+  cheese:{},
+  meat:{},
+  eggs:{},
+  sauce:{},
+  vegetables:{},
+  notes:""
+};
 
-/* CREAR OPCIONES */
+let currentCustom = {
+  meat:{},
+  rice:{},
+  potato:{},
+  beans:{},
+  sides:{},
+  tortillas:{}
+};
+
+let selectedSoup = "";
+
+
+/* =========================
+   SEGURIDAD HTML
+========================= */
+
+function esc(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   CREAR OPCIONES
+========================= */
 
 function createOptions(
   list,
   containerId,
+  state,
   category
-) {
+){
 
-  const container =
+  const c =
     document.getElementById(containerId);
 
-  container.innerHTML = "";
+  c.innerHTML = "";
 
-  list.forEach(function(item) {
+  list.forEach(item => {
 
     const row =
       document.createElement("div");
@@ -583,22 +888,23 @@ function createOptions(
     row.className = "option-row";
 
     row.id =
-      "row-" + category + "-" +
-      item.replace(/\s+/g, "-");
+      "row-" +
+      containerId +
+      "-" +
+      slug(item);
 
 
     const name =
       document.createElement("div");
 
     name.className = "option-name";
-
     name.textContent = item;
 
 
-    const quantity =
+    const q =
       document.createElement("div");
 
-    quantity.className = "quantity";
+    q.className = "quantity";
 
 
     const minus =
@@ -606,27 +912,17 @@ function createOptions(
 
     minus.textContent = "−";
 
-    minus.onclick = function() {
 
-      changeQuantity(
-        category,
-        item,
-        -1
-      );
-
-    };
-
-
-    const number =
+    const num =
       document.createElement("span");
 
-    number.id =
-      "quantity-" +
-      category +
+    num.id =
+      "num-" +
+      containerId +
       "-" +
-      item.replace(/\s+/g, "-");
+      slug(item);
 
-    number.textContent = "0";
+    num.textContent = "0";
 
 
     const plus =
@@ -634,178 +930,222 @@ function createOptions(
 
     plus.textContent = "+";
 
-    plus.onclick = function() {
 
-      changeQuantity(
+    minus.onclick = () =>
+      changeState(
+        state,
         category,
         item,
-        1
+        -1,
+        containerId
       );
 
-    };
+
+    plus.onclick = () =>
+      changeState(
+        state,
+        category,
+        item,
+        1,
+        containerId
+      );
 
 
-    quantity.appendChild(minus);
-    quantity.appendChild(number);
-    quantity.appendChild(plus);
+    q.append(
+      minus,
+      num,
+      plus
+    );
 
+    row.append(
+      name,
+      q
+    );
 
-    row.appendChild(name);
-    row.appendChild(quantity);
-
-
-    container.appendChild(row);
+    c.appendChild(row);
 
   });
 
 }
 
 
-/* CANTIDADES */
+function slug(s){
 
-function changeQuantity(
+  return s
+    .replace(/\s+/g,"-")
+    .replace(
+      /[^a-zA-Z0-9ÁÉÍÓÚáéíóúÑñ-]/g,
+      ""
+    );
+
+}
+
+
+/* =========================
+   CAMBIAR CANTIDAD
+========================= */
+
+function changeState(
+  state,
   category,
   item,
-  change
-) {
+  delta,
+  containerId
+){
 
-  if (!currentSandwich[category][item]) {
+  state[category][item] =
+    (state[category][item] || 0) + delta;
 
-    currentSandwich[category][item] = 0;
 
+  if(state[category][item] < 0){
+    state[category][item] = 0;
   }
 
 
-  currentSandwich[category][item] += change;
-
-
-  if (
-    currentSandwich[category][item] < 0
-  ) {
-
-    currentSandwich[category][item] = 0;
-
+  if(state[category][item] > 10){
+    state[category][item] = 10;
   }
 
 
-  if (
-    currentSandwich[category][item] > 10
-  ) {
-
-    currentSandwich[category][item] = 10;
-
-  }
-
-
-  const number =
-    document.getElementById(
-      "quantity-" +
-      category +
-      "-" +
-      item.replace(/\s+/g, "-")
-    );
+  document.getElementById(
+    "num-" +
+    containerId +
+    "-" +
+    slug(item)
+  ).textContent =
+    state[category][item];
 
 
-  if (number) {
-
-    number.textContent =
-      currentSandwich[category][item];
-
-  }
-
-
-  const row =
-    document.getElementById(
-      "row-" +
-      category +
-      "-" +
-      item.replace(/\s+/g, "-")
-    );
-
-
-  if (row) {
-
-    if (
-      currentSandwich[category][item] > 0
-    ) {
-
-      row.classList.add("selected");
-
-    } else {
-
-      row.classList.remove("selected");
-
-    }
-
-  }
+  document.getElementById(
+    "row-" +
+    containerId +
+    "-" +
+    slug(item)
+  ).classList.toggle(
+    "selected",
+    state[category][item] > 0
+  );
 
 }
 
 
-/* PAN */
+/* =========================
+   PAN
+========================= */
 
-function selectBread(
-  bread,
-  button
-) {
+function selectBread(b,btn){
 
-  currentSandwich.bread =
-    bread;
-
+  currentSandwich.bread = b;
 
   document
-    .querySelectorAll(".bread")
-    .forEach(function(btn) {
+    .querySelectorAll(
+      "#breadList .bread"
+    )
+    .forEach(x =>
+      x.classList.remove("selected")
+    );
 
-      btn.classList.remove("selected");
-
-    });
-
-
-  button.classList.add("selected");
+  btn.classList.add("selected");
 
 }
 
 
-/* CREAR IDENTIFICADOR */
+/* =========================
+   FORMATEAR OPCIONES
+========================= */
 
-function sandwichKey(
-  sandwich
-) {
+function formatItems(items){
+
+  const a =
+    Object.entries(items)
+      .filter(x => x[1] > 0)
+      .map(
+        x =>
+          esc(x[0]) +
+          " × " +
+          x[1]
+      );
+
+  return a.length
+    ? a.join(", ")
+    : "Ninguno";
+
+}
+
+
+/* =========================
+   CLAVE DEL PEDIDO
+========================= */
+
+function itemKey(type,obj){
 
   return JSON.stringify({
-
-    bread: sandwich.bread,
-
-    cheese: sandwich.cheese,
-
-    meat: sandwich.meat,
-
-    eggs: sandwich.eggs,
-
-    sauce: sandwich.sauce,
-
-    vegetables: sandwich.vegetables,
-
-    notes: sandwich.notes
-
+    type,
+    ...obj
   });
 
 }
 
 
-/* AGREGAR SÁNDWICH */
+/* =========================
+   AGREGAR PRODUCTO
+========================= */
 
-function addSandwich() {
+function addOrderItem(
+  type,
+  name,
+  details,
+  keyData
+){
 
-  if (!currentSandwich.bread) {
+  const key =
+    itemKey(
+      type,
+      keyData || {name}
+    );
+
+
+  const existing =
+    order.find(
+      x => x.key === key
+    );
+
+
+  if(existing){
+
+    existing.quantity++;
+
+  }else{
+
+    order.push({
+      key,
+      quantity:1,
+      type,
+      name,
+      details
+    });
+
+  }
+
+
+  renderOrder();
+
+}
+
+
+/* =========================
+   AGREGAR SÁNDWICH
+========================= */
+
+function addSandwich(){
+
+  if(!currentSandwich.bread){
 
     alert(
       "Primero selecciona el pan."
     );
 
     return;
-
   }
 
 
@@ -816,140 +1156,397 @@ function addSandwich() {
       .trim();
 
 
-  const newKey =
-    sandwichKey(currentSandwich);
+  const s =
+    JSON.parse(
+      JSON.stringify(
+        currentSandwich
+      )
+    );
 
 
-  const existing =
-    order.find(function(item) {
+  const details = {
 
-      return item.key === newKey;
+    bread:s.bread,
+    cheese:s.cheese,
+    meat:s.meat,
+    eggs:s.eggs,
+    sauce:s.sauce,
+    vegetables:s.vegetables,
+    notes:s.notes
 
-    });
-
-
-  if (existing) {
-
-    existing.quantity++;
-
-  } else {
-
-    order.push({
-
-      key: newKey,
-
-      quantity: 1,
-
-      sandwich:
-        JSON.parse(
-          JSON.stringify(currentSandwich)
-        )
-
-    });
-
-  }
+  };
 
 
-  renderOrder();
+  addOrderItem(
+    "Sándwich",
+    "Sándwich",
+    details,
+    details
+  );
+
 
   clearCurrentSandwich();
 
 }
 
 
-/* MOSTRAR PEDIDO */
+/* =========================
+   LIMPIAR SÁNDWICH
+========================= */
 
-function renderOrder() {
+function clearCurrentSandwich(){
 
-  const container =
-    document.getElementById("orderList");
+  currentSandwich = {
+
+    bread:"",
+    cheese:{},
+    meat:{},
+    eggs:{},
+    sauce:{},
+    vegetables:{},
+    notes:""
+
+  };
 
 
-  if (order.length === 0) {
+  document
+    .querySelectorAll(
+      "#breadList .bread"
+    )
+    .forEach(x =>
+      x.classList.remove("selected")
+    );
 
-    container.innerHTML =
-      '<div class="empty">Todavía no hay sándwiches.</div>';
+
+  document
+    .querySelectorAll(
+      "#panel-sandwiches .option-row"
+    )
+    .forEach(x =>
+      x.classList.remove("selected")
+    );
+
+
+  document
+    .querySelectorAll(
+      "#panel-sandwiches .quantity span"
+    )
+    .forEach(
+      x => x.textContent = "0"
+    );
+
+
+  document.getElementById(
+    "sandwichNotes"
+  ).value = "";
+
+}
+
+
+/* =========================
+   MENÚ PERSONALIZABLE
+========================= */
+
+function addCustomMeal(){
+
+  const c =
+    JSON.parse(
+      JSON.stringify(
+        currentCustom
+      )
+    );
+
+
+  const notes =
+    document
+      .getElementById("customNotes")
+      .value
+      .trim();
+
+
+  const has =
+    Object
+      .values(c)
+      .some(cat =>
+        Object
+          .values(cat)
+          .some(v => v > 0)
+      );
+
+
+  if(!has){
+
+    alert(
+      "Selecciona por lo menos una opción."
+    );
 
     return;
-
   }
 
 
-  container.innerHTML = "";
+  const details = {
+    ...c,
+    notes
+  };
 
 
-  order.forEach(function(item, index) {
+  addOrderItem(
+    "Menú personalizable",
+    "Menú personalizable",
+    details,
+    details
+  );
 
-    const sandwich =
-      item.sandwich;
+
+  clearCustom();
+
+}
 
 
-    const div =
+/* =========================
+   LIMPIAR MENÚ PERSONALIZABLE
+========================= */
+
+function clearCustom(){
+
+  currentCustom = {
+
+    meat:{},
+    rice:{},
+    potato:{},
+    beans:{},
+    sides:{},
+    tortillas:{}
+
+  };
+
+
+  document
+    .querySelectorAll(
+      "#panel-custom .option-row"
+    )
+    .forEach(x =>
+      x.classList.remove("selected")
+    );
+
+
+  document
+    .querySelectorAll(
+      "#panel-custom .quantity span"
+    )
+    .forEach(
+      x => x.textContent = "0"
+    );
+
+
+  document.getElementById(
+    "customNotes"
+  ).value = "";
+
+}
+
+
+/* =========================
+   SOPAS
+========================= */
+
+function addSoup(){
+
+  if(!selectedSoup){
+
+    alert(
+      "Selecciona una sopa."
+    );
+
+    return;
+  }
+
+
+  const notes =
+    document
+      .getElementById("soupNotes")
+      .value
+      .trim();
+
+
+  addOrderItem(
+    "Sopa",
+    selectedSoup,
+    {
+      soup:selectedSoup,
+      notes
+    },
+    {
+      soup:selectedSoup,
+      notes
+    }
+  );
+
+
+  selectedSoup = "";
+
+
+  document
+    .querySelectorAll(
+      "#soupChoices .choice"
+    )
+    .forEach(x =>
+      x.classList.remove("selected")
+    );
+
+
+  document.getElementById(
+    "soupNotes"
+  ).value = "";
+
+}
+
+
+/* =========================
+   MOSTRAR PEDIDO
+========================= */
+
+function renderOrder(){
+
+  const c =
+    document.getElementById(
+      "orderList"
+    );
+
+
+  if(!order.length){
+
+    c.innerHTML =
+      '<div class="empty">' +
+      'Todavía no hay productos.' +
+      '</div>';
+
+    return;
+  }
+
+
+  c.innerHTML = "";
+
+
+  order.forEach((it,i) => {
+
+    const d =
       document.createElement("div");
 
-    div.className =
-      "order-item";
+    d.className = "order-item";
 
 
-    let details =
-      "<strong>Pan:</strong> " +
-      sandwich.bread +
-      "<br>";
+    let details = "";
 
 
-    details +=
-      formatCategory(
-        "Queso",
-        sandwich.cheese
-      );
+    if(it.type === "Sándwich"){
+
+      details =
+        "<strong>Pan:</strong> " +
+        esc(it.details.bread) +
+        "<br>" +
+
+        "<strong>Queso:</strong> " +
+        formatItems(it.details.cheese) +
+        "<br>" +
+
+        "<strong>Carne:</strong> " +
+        formatItems(it.details.meat) +
+        "<br>" +
+
+        "<strong>Huevos:</strong> " +
+        formatItems(it.details.eggs) +
+        "<br>" +
+
+        "<strong>Salsas:</strong> " +
+        formatItems(it.details.sauce) +
+        "<br>" +
+
+        "<strong>Vegetales:</strong> " +
+        formatItems(it.details.vegetables);
 
 
-    details +=
-      formatCategory(
-        "Carne",
-        sandwich.meat
-      );
+      if(it.details.notes){
+
+        details +=
+          "<br><strong>Notas:</strong> " +
+          esc(it.details.notes);
+
+      }
+
+    }
+
+    else if(
+      it.type ===
+      "Menú personalizable"
+    ){
+
+      details =
+        "<strong>Carnes:</strong> " +
+        formatItems(it.details.meat) +
+        "<br>" +
+
+        "<strong>Arroz:</strong> " +
+        formatItems(it.details.rice) +
+        "<br>" +
+
+        "<strong>Papa:</strong> " +
+        formatItems(it.details.potato) +
+        "<br>" +
+
+        "<strong>Frijol:</strong> " +
+        formatItems(it.details.beans) +
+        "<br>" +
+
+        "<strong>Otros:</strong> " +
+        formatItems(it.details.sides) +
+        "<br>" +
+
+        "<strong>Tortillas:</strong> " +
+        formatItems(it.details.tortillas);
 
 
-    details +=
-      formatCategory(
-        "Huevos",
-        sandwich.eggs
-      );
+      if(it.details.notes){
+
+        details +=
+          "<br><strong>Notas:</strong> " +
+          esc(it.details.notes);
+
+      }
+
+    }
+
+    else if(it.type === "Sopa"){
+
+      details =
+        "<strong>Sopa:</strong> " +
+        esc(it.details.soup);
 
 
-    details +=
-      formatCategory(
-        "Salsas",
-        sandwich.sauce
-      );
+      if(it.details.notes){
 
+        details +=
+          "<br><strong>Notas:</strong> " +
+          esc(it.details.notes);
 
-    details +=
-      formatCategory(
-        "Vegetales",
-        sandwich.vegetables
-      );
+      }
 
+    }
 
-    if (sandwich.notes) {
+    else{
 
-      details +=
-        "<strong>Notas:</strong> " +
-        escapeHTML(
-          sandwich.notes
-        ) +
-        "<br>";
+      details =
+        esc(it.name);
 
     }
 
 
-    div.innerHTML = `
+    d.innerHTML = `
 
       <div class="order-header">
 
         <div class="order-title">
-          ${item.quantity} × Sándwich
+          ${it.quantity} × ${esc(it.name)}
         </div>
 
       </div>
@@ -962,19 +1559,19 @@ function renderOrder() {
 
         <button
           class="small-button plus"
-          onclick="increaseOrder(${index})">
+          onclick="increaseOrder(${i})">
           +
         </button>
 
         <button
           class="small-button minus"
-          onclick="decreaseOrder(${index})">
+          onclick="decreaseOrder(${i})">
           −
         </button>
 
         <button
           class="small-button delete"
-          onclick="deleteOrder(${index})">
+          onclick="deleteOrder(${i})">
           Eliminar
         </button>
 
@@ -983,201 +1580,468 @@ function renderOrder() {
     `;
 
 
-    container.appendChild(div);
+    c.appendChild(d);
 
   });
 
 }
 
 
-/* FORMATO DE INGREDIENTES */
+/* =========================
+   CONTROLES DEL PEDIDO
+========================= */
 
-function formatCategory(
-  title,
-  items
-) {
+function increaseOrder(i){
 
-  const selected =
-    Object.entries(items)
-      .filter(function(entry) {
+  order[i].quantity++;
 
-        return entry[1] > 0;
+  renderOrder();
 
-      })
-      .map(function(entry) {
-
-        return (
-          escapeHTML(entry[0]) +
-          " × " +
-          entry[1]
-        );
-
-      });
+}
 
 
-  if (selected.length === 0) {
+function decreaseOrder(i){
 
-    return (
-      "<strong>" +
-      title +
-      ":</strong> Ninguno<br>"
+  order[i].quantity--;
+
+  if(order[i].quantity <= 0){
+
+    order.splice(i,1);
+
+  }
+
+  renderOrder();
+
+}
+
+
+function deleteOrder(i){
+
+  order.splice(i,1);
+
+  renderOrder();
+
+}
+
+
+/* =========================
+   ABRIR CATEGORÍA
+========================= */
+
+function closePanels(){
+
+  document
+    .querySelectorAll(".panel")
+    .forEach(
+      p => p.classList.remove("open")
+    );
+
+
+  document
+    .querySelectorAll(".menu-button")
+    .forEach(
+      b => b.classList.remove("active")
+    );
+
+}
+
+
+function openCategory(cat,btn){
+
+  closePanels();
+
+  btn.classList.add("active");
+
+
+  document
+    .getElementById(cat.panel)
+    .classList.add("open");
+
+
+  if(cat.panel === "panel-products"){
+
+    document.getElementById(
+      "productsTitle"
+    ).textContent =
+      cat.title;
+
+
+    createStandardList(
+      cat.items
     );
 
   }
 
+}
 
-  return (
-    "<strong>" +
-    title +
-    ":</strong> " +
-    selected.join(", ") +
-    "<br>"
+
+/* =========================
+   PRODUCTOS NORMALES
+========================= */
+
+function createStandardList(items){
+
+  const c =
+    document.getElementById(
+      "productsList"
+    );
+
+  c.innerHTML = "";
+
+
+  items.forEach(item => {
+
+    const row =
+      document.createElement("div");
+
+    row.className = "option-row";
+
+
+    const name =
+      document.createElement("div");
+
+    name.className =
+      "option-name";
+
+    name.textContent =
+      item;
+
+
+    const q =
+      document.createElement("div");
+
+    q.className =
+      "quantity";
+
+
+    const minus =
+      document.createElement("button");
+
+    minus.textContent = "−";
+
+
+    const num =
+      document.createElement("span");
+
+    num.textContent = "0";
+
+
+    const plus =
+      document.createElement("button");
+
+    plus.textContent = "+";
+
+
+    let n = 0;
+
+
+    minus.onclick = () => {
+
+      n = Math.max(
+        0,
+        n - 1
+      );
+
+      num.textContent = n;
+
+      row.classList.toggle(
+        "selected",
+        n > 0
+      );
+
+    };
+
+
+    plus.onclick = () => {
+
+      n = Math.min(
+        10,
+        n + 1
+      );
+
+      num.textContent = n;
+
+      row.classList.toggle(
+        "selected",
+        n > 0
+      );
+
+    };
+
+
+    const add =
+      document.createElement("button");
+
+    add.className =
+      "small-button plus";
+
+    add.textContent =
+      "Agregar";
+
+
+    add.onclick = () => {
+
+      if(n > 0){
+
+        addOrderItem(
+          "Producto",
+          item,
+          {name:item},
+          {name:item}
+        );
+
+
+        n = 0;
+
+        num.textContent = 0;
+
+        row.classList.remove(
+          "selected"
+        );
+
+      }
+
+    };
+
+
+    q.append(
+      minus,
+      num,
+      plus,
+      add
+    );
+
+
+    row.append(
+      name,
+      q
+    );
+
+
+    c.appendChild(row);
+
+  });
+
+}
+
+
+/* =========================
+   CONFIGURACIÓN INICIAL
+========================= */
+
+function setup(){
+
+  const mc =
+    document.getElementById(
+      "menuCategories"
+    );
+
+
+  categories.forEach(cat => {
+
+    const b =
+      document.createElement("button");
+
+    b.className =
+      "menu-button";
+
+    b.textContent =
+      cat.label;
+
+
+    b.onclick = () =>
+      openCategory(
+        cat,
+        b
+      );
+
+
+    mc.appendChild(b);
+
+  });
+
+
+  createOptions(
+    menu.cheese,
+    "cheeseList",
+    currentSandwich,
+    "cheese"
   );
 
-}
+
+  createOptions(
+    menu.meat,
+    "meatList",
+    currentSandwich,
+    "meat"
+  );
 
 
-/* + DEL PEDIDO */
+  createOptions(
+    menu.eggs,
+    "eggList",
+    currentSandwich,
+    "eggs"
+  );
 
-function increaseOrder(index) {
 
-  order[index].quantity++;
+  createOptions(
+    menu.sauce,
+    "sauceList",
+    currentSandwich,
+    "sauce"
+  );
+
+
+  createOptions(
+    menu.vegetables,
+    "vegetableList",
+    currentSandwich,
+    "vegetables"
+  );
+
+
+  createOptions(
+    customMenu.meat,
+    "customMeat",
+    currentCustom,
+    "meat"
+  );
+
+
+  createOptions(
+    customMenu.rice,
+    "customRice",
+    currentCustom,
+    "rice"
+  );
+
+
+  createOptions(
+    customMenu.potato,
+    "customPotato",
+    currentCustom,
+    "potato"
+  );
+
+
+  createOptions(
+    customMenu.beans,
+    "customBeans",
+    currentCustom,
+    "beans"
+  );
+
+
+  createOptions(
+    customMenu.sides,
+    "customSides",
+    currentCustom,
+    "sides"
+  );
+
+
+  createOptions(
+    customMenu.tortillas,
+    "customTortillas",
+    currentCustom,
+    "tortillas"
+  );
+
+
+  const soups = [
+    "Chicken",
+    "Beef",
+    "Seafood",
+    "Mondongo",
+    "Pozole",
+    "Huevo"
+  ];
+
+
+  const sc =
+    document.getElementById(
+      "soupChoices"
+    );
+
+
+  soups.forEach(s => {
+
+    const b =
+      document.createElement("button");
+
+    b.className =
+      "choice";
+
+    b.textContent =
+      s;
+
+
+    b.onclick = () => {
+
+      selectedSoup = s;
+
+
+      document
+        .querySelectorAll(
+          "#soupChoices .choice"
+        )
+        .forEach(x =>
+          x.classList.remove(
+            "selected"
+          )
+        );
+
+
+      b.classList.add(
+        "selected"
+      );
+
+    };
+
+
+    sc.appendChild(b);
+
+  });
+
 
   renderOrder();
 
 }
 
 
-/* − DEL PEDIDO */
+/* =========================
+   IMPRIMIR PEDIDO
+========================= */
 
-function decreaseOrder(index) {
+function printOrder(){
 
-  order[index].quantity--;
-
-
-  if (
-    order[index].quantity <= 0
-  ) {
-
-    order.splice(index, 1);
-
-  }
-
-
-  renderOrder();
-
-}
-
-
-/* ELIMINAR */
-
-function deleteOrder(index) {
-
-  order.splice(index, 1);
-
-  renderOrder();
-
-}
-
-
-/* LIMPIAR */
-
-function clearCurrentSandwich() {
-
-  currentSandwich = {
-
-    bread: "",
-
-    cheese: {},
-    meat: {},
-    eggs: {},
-    sauce: {},
-    vegetables: {},
-
-    notes: ""
-
-  };
-
-
-  document
-    .querySelectorAll(".bread")
-    .forEach(function(button) {
-
-      button.classList.remove("selected");
-
-    });
-
-
-  document
-    .querySelectorAll(".option-row")
-    .forEach(function(row) {
-
-      row.classList.remove("selected");
-
-    });
-
-
-  document
-    .querySelectorAll(".quantity span")
-    .forEach(function(span) {
-
-      span.textContent = "0";
-
-    });
-
-
-  document.getElementById(
-    "sandwichNotes"
-  ).value = "";
-
-}
-
-
-/* SEGURIDAD */
-
-function escapeHTML(text) {
-
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* IMPRIMIR */
-
-function printOrder() {
-
-  if (order.length === 0) {
+  if(!order.length){
 
     alert(
-      "Agrega por lo menos un sándwich."
+      "Agrega por lo menos un producto."
     );
 
     return;
-
   }
 
 
   const name =
     document
-      .getElementById("customerName")
+      .getElementById(
+        "customerName"
+      )
       .value
       .trim();
 
 
   const phone =
     document
-      .getElementById("customerPhone")
+      .getElementById(
+        "customerPhone"
+      )
       .value
       .trim();
-
-
-  const now =
-    new Date();
 
 
   let html = `
@@ -1186,84 +2050,165 @@ function printOrder() {
 
     <hr>
 
-    <strong>CLIENTE:</strong><br>
-    ${escapeHTML(name || "Sin nombre")}<br><br>
+    <strong>CLIENTE:</strong>
+    <br>
+    ${esc(name || "Sin nombre")}
 
-    <strong>TELÉFONO:</strong><br>
-    ${escapeHTML(phone || "Sin teléfono")}<br>
+    <br><br>
+
+    <strong>TELÉFONO:</strong>
+    <br>
+    ${esc(phone || "Sin teléfono")}
+
+    <br>
 
     <hr>
 
   `;
 
 
-  order.forEach(function(item, index) {
-
-    const sandwich =
-      item.sandwich;
-
+  order.forEach(it => {
 
     html += `
-
       <strong>
-        ${item.quantity} × SÁNDWICH
-      </strong><br>
-
-      Pan: ${escapeHTML(
-        sandwich.bread
-      )}<br>
-
+        ${it.quantity} × ${esc(it.name)}
+      </strong>
+      <br>
     `;
 
 
-    html +=
-      printCategory(
-        "Queso",
-        sandwich.cheese
-      );
-
-
-    html +=
-      printCategory(
-        "Carne",
-        sandwich.meat
-      );
-
-
-    html +=
-      printCategory(
-        "Huevos",
-        sandwich.eggs
-      );
-
-
-    html +=
-      printCategory(
-        "Salsas",
-        sandwich.sauce
-      );
-
-
-    html +=
-      printCategory(
-        "Vegetales",
-        sandwich.vegetables
-      );
-
-
-    if (sandwich.notes) {
+    if(it.type === "Sándwich"){
 
       html +=
-        "Notas: " +
-        escapeHTML(
-          sandwich.notes
-        ) +
+        `Pan: ${esc(it.details.bread)}<br>`;
+
+
+      html +=
+        printCat(
+          "Queso",
+          it.details.cheese
+        );
+
+
+      html +=
+        printCat(
+          "Carne",
+          it.details.meat
+        );
+
+
+      html +=
+        printCat(
+          "Huevos",
+          it.details.eggs
+        );
+
+
+      html +=
+        printCat(
+          "Salsas",
+          it.details.sauce
+        );
+
+
+      html +=
+        printCat(
+          "Vegetales",
+          it.details.vegetables
+        );
+
+
+      if(it.details.notes){
+
+        html +=
+          "Notas: " +
+          esc(it.details.notes) +
+          "<br>";
+
+      }
+
+    }
+
+    else if(
+      it.type ===
+      "Menú personalizable"
+    ){
+
+      html +=
+        printCat(
+          "Carnes",
+          it.details.meat
+        );
+
+
+      html +=
+        printCat(
+          "Arroz",
+          it.details.rice
+        );
+
+
+      html +=
+        printCat(
+          "Papa",
+          it.details.potato
+        );
+
+
+      html +=
+        printCat(
+          "Frijol",
+          it.details.beans
+        );
+
+
+      html +=
+        printCat(
+          "Otros",
+          it.details.sides
+        );
+
+
+      html +=
+        printCat(
+          "Tortillas",
+          it.details.tortillas
+        );
+
+
+      if(it.details.notes){
+
+        html +=
+          "Notas: " +
+          esc(it.details.notes) +
+          "<br>";
+
+      }
+
+    }
+
+    else if(it.type === "Sopa"){
+
+      html +=
+        "Sopa: " +
+        esc(it.details.soup) +
         "<br>";
+
+
+      if(it.details.notes){
+
+        html +=
+          "Notas: " +
+          esc(it.details.notes) +
+          "<br>";
+
+      }
 
     }
 
 
-    html += "<br><hr>";
+    html +=
+      "<br><hr>";
 
   });
 
@@ -1278,85 +2223,44 @@ function printOrder() {
 }
 
 
-/* CATEGORÍAS PARA IMPRESIÓN */
+/* =========================
+   IMPRIMIR CATEGORÍA
+========================= */
 
-function printCategory(
+function printCat(
   title,
   items
-) {
+){
 
-  const selected =
+  const a =
     Object.entries(items)
-      .filter(function(entry) {
-
-        return entry[1] > 0;
-
-      });
+      .filter(x => x[1] > 0);
 
 
-  if (selected.length === 0) {
+  return a.length
 
-    return "";
+    ? title +
+      ": " +
+      a
+        .map(
+          x =>
+            esc(x[0]) +
+            " × " +
+            x[1]
+        )
+        .join(", ") +
+      "<br>"
 
-  }
-
-
-  let text =
-    title + ": ";
-
-
-  text +=
-    selected
-      .map(function(entry) {
-
-        return (
-          escapeHTML(entry[0]) +
-          " × " +
-          entry[1]
-        );
-
-      })
-      .join(", ");
-
-
-  return text + "<br>";
+    : "";
 
 }
 
 
-/* INICIAR OPCIONES */
+/* =========================
+   INICIAR
+========================= */
 
-createOptions(
-  menu.cheese,
-  "cheeseList",
-  "cheese"
-);
-
-createOptions(
-  menu.meat,
-  "meatList",
-  "meat"
-);
-
-createOptions(
-  menu.eggs,
-  "eggList",
-  "eggs"
-);
-
-createOptions(
-  menu.sauce,
-  "sauceList",
-  "sauce"
-);
-
-createOptions(
-  menu.vegetables,
-  "vegetableList",
-  "vegetables"
-);
-
-renderOrder();
+setup();
 
 </script>
 
