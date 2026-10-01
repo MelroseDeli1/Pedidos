@@ -2271,25 +2271,45 @@ function printOrder(){
 
   try {
     const json = JSON.stringify(printData);
-    const base64 = btoa(unescape(encodeURIComponent(json)));
+
+    // WiFi Browser Print POS espera: wbprint:// + Base64(JSON).
+    // UTF-8 permite nombres con tildes, ñ y otros caracteres.
+    const bytes = new TextEncoder().encode(json);
+    let binary = "";
+    bytes.forEach(byte => binary += String.fromCharCode(byte));
+    const base64 = btoa(binary);
     const printUrl = "wbprint://" + base64;
 
-    window.location.href = printUrl;
+    // En iPad/Safari usamos un enlace explícito para activar el esquema.
+    const link = document.createElement("a");
+    link.href = printUrl;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => link.remove(), 1000);
+
   } catch(error) {
     alert("No se pudo enviar el pedido a la impresora.");
-    console.error(error);
+    console.error("Error wbprint:", error);
   }
 
 }
 
 
 function addPrintLines(target, title, items){
-  if(!items || !items.length) return;
+
+  if(!items || typeof items !== "object") return;
+
+  const entries = Object.entries(items)
+    .filter(([name, quantity]) => Number(quantity) > 0)
+    .sort(([a],[b]) => a.localeCompare(b, undefined, { sensitivity:"base" }));
+
+  if(!entries.length) return;
 
   target.push(`${title}:`);
 
-  items.forEach(item => {
-    target.push(`  ${item.name} x ${item.quantity}`);
+  entries.forEach(([name, quantity]) => {
+    target.push(`  ${name} x ${quantity}`);
   });
 
 }
