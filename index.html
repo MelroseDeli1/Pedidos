@@ -106,7 +106,7 @@ textarea{
   display:block;
 }
 
- .option-list{
+.option-list{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:9px;
@@ -295,7 +295,6 @@ textarea{
   border-bottom:0;
 }
 
-
 .order-buttons{
   display:flex;
   gap:7px;
@@ -332,6 +331,10 @@ textarea{
   cursor:pointer;
 }
 
+.continue-order-button{
+  background:#2563eb;
+}
+
 .empty{
   text-align:center;
   color:#6b7280;
@@ -365,15 +368,18 @@ textarea{
 }
 
 @media(max-width:500px){
+
   .menu-grid,
   .bread-list,
   .option-list,
   .choice-grid{
     grid-template-columns:1fr;
   }
+
 }
 
 @media print{
+
   body{
     background:white;
   }
@@ -401,6 +407,7 @@ textarea{
     border-top:1px dashed black;
     margin:10px 0;
   }
+
 }
 </style>
 </head>
@@ -408,17 +415,25 @@ textarea{
 <body>
 
 <header>
+
   <h1>🥪 PEDIDOS</h1>
+
   <p>Menú completo</p>
+
 </header>
+
 
 <div class="container">
 
+
   <!-- CLIENTE -->
+
   <div class="card">
+
     <h2>👤 Cliente</h2>
 
     <label>Nombre</label>
+
     <input
       id="customerName"
       type="text"
@@ -426,16 +441,20 @@ textarea{
     >
 
     <label>Teléfono</label>
+
     <input
       id="customerPhone"
       type="tel"
       placeholder="Teléfono"
     >
+
   </div>
 
 
   <!-- CATEGORÍAS -->
+
   <div class="card">
+
     <h2>🧾 ¿Qué desea ordenar?</h2>
 
     <p class="note">
@@ -443,12 +462,19 @@ textarea{
       Todo se agrega al mismo pedido.
     </p>
 
-    <div class="menu-grid" id="menuCategories"></div>
+    <div
+      class="menu-grid"
+      id="menuCategories">
+    </div>
+
   </div>
 
 
   <!-- SANDWICHES -->
-  <div class="card panel" id="panel-sandwiches">
+
+  <div
+    class="card panel"
+    id="panel-sandwiches">
 
     <h2>🥪 Sándwiches</h2>
 
@@ -456,62 +482,97 @@ textarea{
       Personaliza el sándwich. Puede elegir cantidades de cada ingrediente.
     </p>
 
+
     <h3>🥖 Pan</h3>
 
-    <div class="bread-list" id="breadList">
+    <div
+      class="bread-list"
+      id="breadList">
 
-      <button class="bread"
-        onclick="selectBread('Pan blanco',this)">
-        Pan blanco
-      </button>
-
-      <button class="bread"
-        onclick="selectBread('Pan integral',this)">
-        Pan integral
-      </button>
-
-      <button class="bread"
+      <button
+        class="bread"
         onclick="selectBread('Bagel',this)">
         Bagel
       </button>
 
-      <button class="bread"
+      <button
+        class="bread"
         onclick="selectBread('Hero',this)">
         Hero
       </button>
 
-      <button class="bread"
-        onclick="selectBread('Roll',this)">
-        Roll
+      <button
+        class="bread"
+        onclick="selectBread('Pan blanco',this)">
+        Pan blanco
       </button>
 
-      <button class="bread"
+      <button
+        class="bread"
+        onclick="selectBread('Pan integral',this)">
+        Pan integral
+      </button>
+
+      <button
+        class="bread"
         onclick="selectBread('Rey Bread',this)">
         Rey Bread
       </button>
 
-      <button class="bread"
+      <button
+        class="bread"
+        onclick="selectBread('Roll',this)">
+        Roll
+      </button>
+
+      <button
+        class="bread"
         onclick="selectBread('Wrap',this)">
         Wrap
       </button>
 
-
     </div>
 
+
     <h3>🧀 Queso</h3>
-    <div id="cheeseList" class="option-list"></div>
+
+    <div
+      id="cheeseList"
+      class="option-list">
+    </div>
+
 
     <h3>🥩 Carne</h3>
-    <div id="meatList" class="option-list"></div>
+
+    <div
+      id="meatList"
+      class="option-list">
+    </div>
+
 
     <h3>🍳 Huevos</h3>
-    <div id="eggList" class="option-list"></div>
+
+    <div
+      id="eggList"
+      class="option-list">
+    </div>
+
 
     <h3>🥫 Salsas</h3>
-    <div id="sauceList" class="option-list"></div>
+
+    <div
+      id="sauceList"
+      class="option-list">
+    </div>
+
 
     <h3>🥬 Vegetales</h3>
-    <div id="vegetableList" class="option-list"></div>
+
+    <div
+      id="vegetableList"
+      class="option-list">
+    </div>
+
 
     <label>📝 Notas del sándwich</label>
 
@@ -521,11 +582,13 @@ textarea{
       placeholder="Ejemplo: cortar a la mitad, salsa aparte..."
     ></textarea>
 
+
     <button
       class="add-button"
       onclick="addSandwich()">
       ➕ AGREGAR SÁNDWICH AL PEDIDO
     </button>
+
 
     <button
       class="clear-button"
@@ -537,7 +600,10 @@ textarea{
 
 
   <!-- MENÚ PERSONALIZABLE -->
-  <div class="card panel" id="panel-custom">
+
+  <div
+    class="card panel"
+    id="panel-custom">
 
     <h2>🍽️ Menú personalizable</h2>
 
@@ -546,23 +612,54 @@ textarea{
       Puede elegir cantidades de cada categoría.
     </p>
 
+
     <h3>🥩 Carnes</h3>
-    <div id="customMeat" class="option-list"></div>
+
+    <div
+      id="customMeat"
+      class="option-list">
+    </div>
+
 
     <h3>🍚 Arroz</h3>
-    <div id="customRice" class="option-list"></div>
+
+    <div
+      id="customRice"
+      class="option-list">
+    </div>
+
 
     <h3>🥔 Papa</h3>
-    <div id="customPotato" class="option-list"></div>
+
+    <div
+      id="customPotato"
+      class="option-list">
+    </div>
+
 
     <h3>🫘 Frijol</h3>
-    <div id="customBeans" class="option-list"></div>
+
+    <div
+      id="customBeans"
+      class="option-list">
+    </div>
+
 
     <h3>🍌 Otros acompañantes</h3>
-    <div id="customSides" class="option-list"></div>
+
+    <div
+      id="customSides"
+      class="option-list">
+    </div>
+
 
     <h3>🫓 Tortillas</h3>
-    <div id="customTortillas" class="option-list"></div>
+
+    <div
+      id="customTortillas"
+      class="option-list">
+    </div>
+
 
     <label>📝 Notas</label>
 
@@ -572,11 +669,13 @@ textarea{
       placeholder="Notas especiales..."
     ></textarea>
 
+
     <button
       class="add-button"
       onclick="addCustomMeal()">
       ➕ AGREGAR AL PEDIDO
     </button>
+
 
     <button
       class="clear-button"
@@ -588,7 +687,10 @@ textarea{
 
 
   <!-- SOPAS -->
-  <div class="card panel" id="panel-soups">
+
+  <div
+    class="card panel"
+    id="panel-soups">
 
     <h2>🍲 Sopas</h2>
 
@@ -596,7 +698,11 @@ textarea{
       Seleccione una opción de sopa.
     </p>
 
-    <div id="soupChoices" class="choice-grid"></div>
+    <div
+      id="soupChoices"
+      class="choice-grid">
+    </div>
+
 
     <label>📝 Notas</label>
 
@@ -605,6 +711,7 @@ textarea{
       rows="2"
       placeholder="Notas especiales..."
     ></textarea>
+
 
     <button
       class="add-button"
@@ -616,12 +723,15 @@ textarea{
 
 
   <!-- PRODUCTOS -->
-  <div class="card panel" id="panel-products">
+
+  <div
+    class="card panel"
+    id="panel-products">
 
     <h2 id="productsTitle"></h2>
 
     <p class="note">
-      Seleccione la cantidad.
+      Toque el producto para agregarlo al pedido.
     </p>
 
     <div
@@ -633,21 +743,26 @@ textarea{
 
 
   <!-- PEDIDO -->
+
   <div class="card">
 
     <h2>🧾 Pedido actual</h2>
 
     <div id="orderList">
+
       <div class="empty">
         Todavía no hay productos.
       </div>
+
     </div>
 
+
     <button
-      class="print-button"
+      class="print-button continue-order-button"
       onclick="continueOrder()">
       ➕ CONTINUAR PEDIDO
     </button>
+
 
     <button
       class="print-button"
@@ -658,6 +773,7 @@ textarea{
   </div>
 
 </div>
+
 
 <div id="printArea"></div>
 
@@ -813,7 +929,9 @@ const categories = [
     label:"🥞 Pancakes",
     panel:"panel-products",
     title:"🥞 Pancakes",
-    items:["Pancakes"]
+    items:[
+      "Pancakes"
+    ]
   },
 
   {
@@ -821,7 +939,9 @@ const categories = [
     label:"🫓 Pupusas",
     panel:"panel-products",
     title:"🫓 Pupusas",
-    items:["Pupusas"]
+    items:[
+      "Pupusas"
+    ]
   },
 
   {
@@ -829,7 +949,9 @@ const categories = [
     label:"🥣 Oatmeal",
     panel:"panel-products",
     title:"🥣 Oatmeal",
-    items:["Oatmeal"]
+    items:[
+      "Oatmeal"
+    ]
   },
 
   {
@@ -837,7 +959,9 @@ const categories = [
     label:"🥣 Atole",
     panel:"panel-products",
     title:"🥣 Atole",
-    items:["Atole"]
+    items:[
+      "Atole"
+    ]
   },
 
   {
@@ -845,7 +969,9 @@ const categories = [
     label:"🍳 Western Omelette",
     panel:"panel-products",
     title:"🍳 Western Omelette",
-    items:["Western Omelette"]
+    items:[
+      "Western Omelette"
+    ]
   },
 
   {
@@ -859,7 +985,9 @@ const categories = [
     label:"🌯 Enchiladas",
     panel:"panel-products",
     title:"🌯 Enchiladas",
-    items:["Enchiladas"]
+    items:[
+      "Enchiladas"
+    ]
   },
 
   {
@@ -867,7 +995,9 @@ const categories = [
     label:"🍗 Bucket of Fried Chicken",
     panel:"panel-products",
     title:"🍗 Bucket of Fried Chicken",
-    items:["Bucket of Fried Chicken"]
+    items:[
+      "Bucket of Fried Chicken"
+    ]
   },
 
   {
@@ -875,7 +1005,9 @@ const categories = [
     label:"🫓 Tortillas",
     panel:"panel-products",
     title:"🫓 Tortillas",
-    items:["Tortillas"]
+    items:[
+      "Tortillas"
+    ]
   }
 
 ];
@@ -888,31 +1020,53 @@ const categories = [
 let order = [];
 
 let orderNumber =
-  Number(localStorage.getItem("orderNumber") || 0) + 1;
+  Number(
+    localStorage.getItem(
+      "orderNumber"
+    ) || 0
+  ) + 1;
 
 localStorage.setItem(
   "orderNumber",
   orderNumber
 );
 
+
 let currentSandwich = {
+
   bread:"",
+
   cheese:{},
+
   meat:{},
+
   eggs:{},
+
   sauce:{},
+
   vegetables:{},
+
   notes:""
+
 };
 
+
 let currentCustom = {
+
   meat:{},
+
   rice:{},
+
   potato:{},
+
   beans:{},
+
   sides:{},
+
   tortillas:{}
+
 };
+
 
 let selectedSoup = "";
 
@@ -924,11 +1078,52 @@ let selectedSoup = "";
 function esc(text){
 
   return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   SLUG
+========================= */
+
+function slug(s){
+
+  return s
+
+    .replace(
+      /\s+/g,
+      "-"
+    )
+
+    .replace(
+      /[^a-zA-Z0-9ÁÉÍÓÚáéíóúÑñ-]/g,
+      ""
+    );
 
 }
 
@@ -945,100 +1140,157 @@ function createOptions(
 ){
 
   const c =
-    document.getElementById(containerId);
+    document.getElementById(
+      containerId
+    );
 
   c.innerHTML = "";
 
-  [...list].sort((a,b) =>
-    a.localeCompare(b, undefined, { sensitivity:"base" })
-  ).forEach(item => {
 
-    const row =
-      document.createElement("div");
+  [...list]
 
-    row.className = "option-row";
+    .sort(
+      (a,b) =>
+        a.localeCompare(
+          b,
+          undefined,
+          {
+            sensitivity:"base"
+          }
+        )
+    )
 
-    row.id =
-      "row-" +
-      containerId +
-      "-" +
-      slug(item);
+    .forEach(
+      item => {
 
-    const name =
-      document.createElement("div");
-
-    name.className = "option-name";
-    name.textContent = item;
-
-    const q =
-      document.createElement("div");
-
-    q.className = "quantity";
-
-    const minus =
-      document.createElement("button");
-
-    minus.type = "button";
-    minus.className = "minus";
-    minus.textContent = "−";
-    minus.title = "Quitar uno";
-
-    const num =
-      document.createElement("span");
-
-    num.id =
-      "num-" +
-      containerId +
-      "-" +
-      slug(item);
-
-    num.textContent = "0";
-
-    minus.onclick = (e) => {
-      e.stopPropagation();
-      changeState(
-        state,
-        category,
-        item,
-        -1,
-        containerId
-      );
-    };
-
-    // Toda la tarjeta agrega una unidad al tocarla.
-    row.onclick = () =>
-      changeState(
-        state,
-        category,
-        item,
-        1,
-        containerId
-      );
-
-    q.append(
-      minus,
-      num
-    );
-
-    row.append(
-      name,
-      q
-    );
-
-    c.appendChild(row);
-
-  });
-
-}
+        const row =
+          document.createElement(
+            "div"
+          );
 
 
-function slug(s){
+        row.className =
+          "option-row";
 
-  return s
-    .replace(/\s+/g,"-")
-    .replace(
-      /[^a-zA-Z0-9ÁÉÍÓÚáéíóúÑñ-]/g,
-      ""
+
+        row.id =
+          "row-" +
+          containerId +
+          "-" +
+          slug(item);
+
+
+        const name =
+          document.createElement(
+            "div"
+          );
+
+
+        name.className =
+          "option-name";
+
+
+        name.textContent =
+          item;
+
+
+        const q =
+          document.createElement(
+            "div"
+          );
+
+
+        q.className =
+          "quantity";
+
+
+        const minus =
+          document.createElement(
+            "button"
+          );
+
+
+        minus.type =
+          "button";
+
+
+        minus.className =
+          "minus";
+
+
+        minus.textContent =
+          "−";
+
+
+        minus.title =
+          "Quitar uno";
+
+
+        const num =
+          document.createElement(
+            "span"
+          );
+
+
+        num.id =
+          "num-" +
+          containerId +
+          "-" +
+          slug(item);
+
+
+        num.textContent =
+          "0";
+
+
+        minus.onclick =
+          (e) => {
+
+            e.stopPropagation();
+
+
+            changeState(
+              state,
+              category,
+              item,
+              -1,
+              containerId
+            );
+
+          };
+
+
+        row.onclick =
+          () => {
+
+            changeState(
+              state,
+              category,
+              item,
+              1,
+              containerId
+            );
+
+          };
+
+
+        q.append(
+          minus,
+          num
+        );
+
+
+        row.append(
+          name,
+          q
+        );
+
+
+        c.appendChild(
+          row
+        );
+
+      }
     );
 
 }
@@ -1057,16 +1309,29 @@ function changeState(
 ){
 
   state[category][item] =
-    (state[category][item] || 0) + delta;
+    (
+      state[category][item]
+      || 0
+    ) + delta;
 
 
-  if(state[category][item] < 0){
-    state[category][item] = 0;
+  if(
+    state[category][item] < 0
+  ){
+
+    state[category][item] =
+      0;
+
   }
 
 
-  if(state[category][item] > 10){
-    state[category][item] = 10;
+  if(
+    state[category][item] > 10
+  ){
+
+    state[category][item] =
+      10;
+
   }
 
 
@@ -1096,38 +1361,56 @@ function changeState(
    PAN
 ========================= */
 
-function selectBread(b,btn){
+function selectBread(
+  b,
+  btn
+){
 
-  currentSandwich.bread = b;
+  currentSandwich.bread =
+    b;
+
 
   document
     .querySelectorAll(
       "#breadList .bread"
     )
-    .forEach(x =>
-      x.classList.remove("selected")
+    .forEach(
+      x =>
+        x.classList.remove(
+          "selected"
+        )
     );
 
-  btn.classList.add("selected");
+
+  btn.classList.add(
+    "selected"
+  );
 
 }
 
 
 /* =========================
-   FORMATEAR OPCIONES
+   FORMATEAR INGREDIENTES
 ========================= */
 
-function formatItems(items){
+function formatItems(
+  items
+){
 
   const a =
     Object.entries(items)
-      .filter(x => x[1] > 0)
+
+      .filter(
+        x => x[1] > 0
+      )
+
       .map(
         x =>
           esc(x[0]) +
           " × " +
           x[1]
       );
+
 
   return a.length
     ? a.join(", ")
@@ -1137,10 +1420,13 @@ function formatItems(items){
 
 
 /* =========================
-   CLAVE DEL PEDIDO
+   CLAVE
 ========================= */
 
-function itemKey(type,obj){
+function itemKey(
+  type,
+  obj
+){
 
   return JSON.stringify({
     type,
@@ -1165,28 +1451,40 @@ function addOrderItem(
   const key =
     itemKey(
       type,
-      keyData || {name}
+      keyData ||
+      {
+        name
+      }
     );
 
 
   const existing =
     order.find(
-      x => x.key === key
+      x =>
+        x.key === key
     );
 
 
   if(existing){
 
-    existing.quantity += quantity;
+    existing.quantity +=
+      quantity;
 
-  }else{
+  }
+  else{
 
     order.push({
+
       key,
+
       quantity,
+
       type,
+
       name,
+
       details
+
     });
 
   }
@@ -1198,24 +1496,29 @@ function addOrderItem(
 
 
 /* =========================
-   AGREGAR SÁNDWICH
+   SÁNDWICH
 ========================= */
 
 function addSandwich(){
 
-  if(!currentSandwich.bread){
+  if(
+    !currentSandwich.bread
+  ){
 
     alert(
       "Primero selecciona el pan."
     );
 
     return;
+
   }
 
 
   currentSandwich.notes =
     document
-      .getElementById("sandwichNotes")
+      .getElementById(
+        "sandwichNotes"
+      )
       .value
       .trim();
 
@@ -1231,11 +1534,17 @@ function addSandwich(){
   const details = {
 
     bread:s.bread,
+
     cheese:s.cheese,
+
     meat:s.meat,
+
     eggs:s.eggs,
+
     sauce:s.sauce,
+
     vegetables:s.vegetables,
+
     notes:s.notes
 
   };
@@ -1263,11 +1572,17 @@ function clearCurrentSandwich(){
   currentSandwich = {
 
     bread:"",
+
     cheese:{},
+
     meat:{},
+
     eggs:{},
+
     sauce:{},
+
     vegetables:{},
+
     notes:""
 
   };
@@ -1277,8 +1592,11 @@ function clearCurrentSandwich(){
     .querySelectorAll(
       "#breadList .bread"
     )
-    .forEach(x =>
-      x.classList.remove("selected")
+    .forEach(
+      x =>
+        x.classList.remove(
+          "selected"
+        )
     );
 
 
@@ -1286,8 +1604,11 @@ function clearCurrentSandwich(){
     .querySelectorAll(
       "#panel-sandwiches .option-row"
     )
-    .forEach(x =>
-      x.classList.remove("selected")
+    .forEach(
+      x =>
+        x.classList.remove(
+          "selected"
+        )
     );
 
 
@@ -1296,7 +1617,9 @@ function clearCurrentSandwich(){
       "#panel-sandwiches .quantity span"
     )
     .forEach(
-      x => x.textContent = "0"
+      x =>
+        x.textContent =
+          "0"
     );
 
 
@@ -1323,7 +1646,9 @@ function addCustomMeal(){
 
   const notes =
     document
-      .getElementById("customNotes")
+      .getElementById(
+        "customNotes"
+      )
       .value
       .trim();
 
@@ -1331,10 +1656,13 @@ function addCustomMeal(){
   const has =
     Object
       .values(c)
-      .some(cat =>
-        Object
-          .values(cat)
-          .some(v => v > 0)
+      .some(
+        cat =>
+          Object
+            .values(cat)
+            .some(
+              v => v > 0
+            )
       );
 
 
@@ -1345,12 +1673,16 @@ function addCustomMeal(){
     );
 
     return;
+
   }
 
 
   const details = {
+
     ...c,
+
     notes
+
   };
 
 
@@ -1368,7 +1700,7 @@ function addCustomMeal(){
 
 
 /* =========================
-   LIMPIAR MENÚ PERSONALIZABLE
+   LIMPIAR MENÚ
 ========================= */
 
 function clearCustom(){
@@ -1376,10 +1708,15 @@ function clearCustom(){
   currentCustom = {
 
     meat:{},
+
     rice:{},
+
     potato:{},
+
     beans:{},
+
     sides:{},
+
     tortillas:{}
 
   };
@@ -1389,8 +1726,11 @@ function clearCustom(){
     .querySelectorAll(
       "#panel-custom .option-row"
     )
-    .forEach(x =>
-      x.classList.remove("selected")
+    .forEach(
+      x =>
+        x.classList.remove(
+          "selected"
+        )
     );
 
 
@@ -1399,7 +1739,9 @@ function clearCustom(){
       "#panel-custom .quantity span"
     )
     .forEach(
-      x => x.textContent = "0"
+      x =>
+        x.textContent =
+          "0"
     );
 
 
@@ -1423,27 +1765,35 @@ function addSoup(){
     );
 
     return;
+
   }
 
 
   const notes =
     document
-      .getElementById("soupNotes")
+      .getElementById(
+        "soupNotes"
+      )
       .value
       .trim();
 
 
   addOrderItem(
+
     "Sopa",
+
     selectedSoup,
+
     {
       soup:selectedSoup,
       notes
     },
+
     {
       soup:selectedSoup,
       notes
     }
+
   );
 
 
@@ -1454,8 +1804,11 @@ function addSoup(){
     .querySelectorAll(
       "#soupChoices .choice"
     )
-    .forEach(x =>
-      x.classList.remove("selected")
+    .forEach(
+      x =>
+        x.classList.remove(
+          "selected"
+        )
     );
 
 
@@ -1467,7 +1820,7 @@ function addSoup(){
 
 
 /* =========================
-   MOSTRAR PEDIDO
+   RENDER PEDIDO
 ========================= */
 
 function renderOrder(){
@@ -1486,161 +1839,369 @@ function renderOrder(){
       '</div>';
 
     return;
+
   }
 
 
   c.innerHTML = "";
 
 
-  // Los tacos se muestran juntos como una sola sección.
   const tacos = [];
 
-  order.forEach((it,i) => {
 
-    if(it.type === "Taco"){
+  order.forEach(
+    (it,i) => {
 
-      tacos.push({it,i});
-      return;
+      if(
+        it.type === "Taco"
+      ){
 
-    }
+        tacos.push({
+          it,
+          i
+        });
 
-    const d =
-      document.createElement("div");
+        return;
 
-    d.className = "order-item";
-
-    let details = "";
-
-    if(it.type === "Sándwich"){
-
-      details =
-        "<strong>Pan:</strong> " +
-        esc(it.details.bread) +
-        "<br>" +
-        "<strong>Queso:</strong> " +
-        formatItems(it.details.cheese) +
-        "<br>" +
-        "<strong>Carne:</strong> " +
-        formatItems(it.details.meat) +
-        "<br>" +
-        "<strong>Huevos:</strong> " +
-        formatItems(it.details.eggs) +
-        "<br>" +
-        "<strong>Salsas:</strong> " +
-        formatItems(it.details.sauce) +
-        "<br>" +
-        "<strong>Vegetales:</strong> " +
-        formatItems(it.details.vegetables);
-
-      if(it.details.notes){
-        details +=
-          "<br><strong>Notas:</strong> " +
-          esc(it.details.notes);
       }
 
-    }
-    else if(it.type === "Menú personalizable"){
 
-      details =
-        "<strong>Carnes:</strong> " +
-        formatItems(it.details.meat) +
-        "<br>" +
-        "<strong>Arroz:</strong> " +
-        formatItems(it.details.rice) +
-        "<br>" +
-        "<strong>Papa:</strong> " +
-        formatItems(it.details.potato) +
-        "<br>" +
-        "<strong>Frijol:</strong> " +
-        formatItems(it.details.beans) +
-        "<br>" +
-        "<strong>Otros:</strong> " +
-        formatItems(it.details.sides) +
-        "<br>" +
-        "<strong>Tortillas:</strong> " +
-        formatItems(it.details.tortillas);
+      const d =
+        document.createElement(
+          "div"
+        );
 
-      if(it.details.notes){
-        details +=
-          "<br><strong>Notas:</strong> " +
-          esc(it.details.notes);
+
+      d.className =
+        "order-item";
+
+
+      let details = "";
+
+
+      if(
+        it.type === "Sándwich"
+      ){
+
+        details =
+
+          "<strong>Pan:</strong> " +
+
+          esc(
+            it.details.bread
+          ) +
+
+          "<br>" +
+
+          "<strong>Queso:</strong> " +
+
+          formatItems(
+            it.details.cheese
+          ) +
+
+          "<br>" +
+
+          "<strong>Carne:</strong> " +
+
+          formatItems(
+            it.details.meat
+          ) +
+
+          "<br>" +
+
+          "<strong>Huevos:</strong> " +
+
+          formatItems(
+            it.details.eggs
+          ) +
+
+          "<br>" +
+
+          "<strong>Salsas:</strong> " +
+
+          formatItems(
+            it.details.sauce
+          ) +
+
+          "<br>" +
+
+          "<strong>Vegetales:</strong> " +
+
+          formatItems(
+            it.details.vegetables
+          );
+
+
+        if(
+          it.details.notes
+        ){
+
+          details +=
+
+            "<br><strong>Notas:</strong> " +
+
+            esc(
+              it.details.notes
+            );
+
+        }
+
       }
 
-    }
-    else if(it.type === "Sopa"){
+      else if(
+        it.type ===
+        "Menú personalizable"
+      ){
 
-      details =
-        "<strong>Sopa:</strong> " +
-        esc(it.details.soup);
+        details =
 
-      if(it.details.notes){
-        details +=
-          "<br><strong>Notas:</strong> " +
-          esc(it.details.notes);
+          "<strong>Carnes:</strong> " +
+
+          formatItems(
+            it.details.meat
+          ) +
+
+          "<br>" +
+
+          "<strong>Arroz:</strong> " +
+
+          formatItems(
+            it.details.rice
+          ) +
+
+          "<br>" +
+
+          "<strong>Papa:</strong> " +
+
+          formatItems(
+            it.details.potato
+          ) +
+
+          "<br>" +
+
+          "<strong>Frijol:</strong> " +
+
+          formatItems(
+            it.details.beans
+          ) +
+
+          "<br>" +
+
+          "<strong>Otros:</strong> " +
+
+          formatItems(
+            it.details.sides
+          ) +
+
+          "<br>" +
+
+          "<strong>Tortillas:</strong> " +
+
+          formatItems(
+            it.details.tortillas
+          );
+
+
+        if(
+          it.details.notes
+        ){
+
+          details +=
+
+            "<br><strong>Notas:</strong> " +
+
+            esc(
+              it.details.notes
+            );
+
+        }
+
       }
 
-    }
-    else{
+      else if(
+        it.type === "Sopa"
+      ){
 
-      details = esc(it.name);
+        details =
 
-    }
+          "<strong>Sopa:</strong> " +
 
-    d.innerHTML = `
-      <div class="order-header">
-        <div class="order-title">
-          ${it.quantity} × ${esc(it.name)}
+          esc(
+            it.details.soup
+          );
+
+
+        if(
+          it.details.notes
+        ){
+
+          details +=
+
+            "<br><strong>Notas:</strong> " +
+
+            esc(
+              it.details.notes
+            );
+
+        }
+
+      }
+
+      else{
+
+        details =
+          esc(
+            it.name
+          );
+
+      }
+
+
+      d.innerHTML = `
+
+        <div class="order-header">
+
+          <div class="order-title">
+
+            ${it.quantity}
+            ×
+            ${esc(it.name)}
+
+          </div>
+
         </div>
-      </div>
-      <div class="order-details">
-        ${details}
-      </div>
-      <div class="order-buttons">
-        <button class="small-button plus" onclick="increaseOrder(${i})">+</button>
-        <button class="small-button minus" onclick="decreaseOrder(${i})">−</button>
-        <button class="small-button delete" onclick="deleteOrder(${i})">Eliminar</button>
-      </div>
-    `;
 
-    c.appendChild(d);
 
-  });
+        <div class="order-details">
+
+          ${details}
+
+        </div>
+
+
+        <div class="order-buttons">
+
+          <button
+            class="small-button plus"
+            onclick="increaseOrder(${i})">
+            +
+          </button>
+
+          <button
+            class="small-button minus"
+            onclick="decreaseOrder(${i})">
+            −
+          </button>
+
+          <button
+            class="small-button delete"
+            onclick="deleteOrder(${i})">
+            Eliminar
+          </button>
+
+        </div>
+
+      `;
+
+
+      c.appendChild(d);
+
+    }
+  );
 
 
   if(tacos.length){
 
     const tacoBox =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    tacoBox.className = "order-item";
 
-    const tacoLines = tacos.map(({it,i}) => `
-      <div class="taco-order-line">
-        <div class="order-title">
-          ${it.quantity} × ${esc(it.name)}
-        </div>
-        <div class="order-buttons">
-          <button class="small-button plus" onclick="increaseOrder(${i})">+</button>
-          <button class="small-button minus" onclick="decreaseOrder(${i})">−</button>
-          <button class="small-button delete" onclick="deleteOrder(${i})">Eliminar</button>
-        </div>
-      </div>
-    `).join("");
+    tacoBox.className =
+      "order-item";
+
 
     tacoBox.innerHTML = `
+
       <div class="order-header">
-        <div class="order-title">🌮 Tacos</div>
+
+        <div class="order-title">
+          🌮 Tacos
+        </div>
+
       </div>
+
       <div class="order-details">
-        ${tacoLines}
+
+        ${
+
+          tacos
+
+            .map(
+              ({it,i}) => `
+
+                <div
+                  class="taco-order-line"
+                >
+
+                  <div
+                    class="order-title"
+                  >
+
+                    ${it.quantity}
+                    ×
+                    ${esc(it.name)}
+
+                  </div>
+
+
+                  <div
+                    class="order-buttons"
+                  >
+
+                    <button
+                      class="small-button plus"
+                      onclick="increaseOrder(${i})">
+                      +
+                    </button>
+
+                    <button
+                      class="small-button minus"
+                      onclick="decreaseOrder(${i})">
+                      −
+                    </button>
+
+                    <button
+                      class="small-button delete"
+                      onclick="deleteOrder(${i})">
+                      Eliminar
+                    </button>
+
+                  </div>
+
+                </div>
+
+              `
+            )
+
+            .join("")
+
+        }
+
       </div>
+
     `;
 
-    c.appendChild(tacoBox);
+
+    c.appendChild(
+      tacoBox
+    );
 
   }
 
 }
+
 
 /* =========================
    CONTROLES DEL PEDIDO
@@ -1659,11 +2220,18 @@ function decreaseOrder(i){
 
   order[i].quantity--;
 
-  if(order[i].quantity <= 0){
 
-    order.splice(i,1);
+  if(
+    order[i].quantity <= 0
+  ){
+
+    order.splice(
+      i,
+      1
+    );
 
   }
+
 
   renderOrder();
 
@@ -1672,7 +2240,10 @@ function decreaseOrder(i){
 
 function deleteOrder(i){
 
-  order.splice(i,1);
+  order.splice(
+    i,
+    1
+  );
 
   renderOrder();
 
@@ -1680,40 +2251,63 @@ function deleteOrder(i){
 
 
 /* =========================
-   ABRIR CATEGORÍA
+   CATEGORÍAS
 ========================= */
 
 function closePanels(){
 
   document
-    .querySelectorAll(".panel")
+    .querySelectorAll(
+      ".panel"
+    )
     .forEach(
-      p => p.classList.remove("open")
+      p =>
+        p.classList.remove(
+          "open"
+        )
     );
 
 
   document
-    .querySelectorAll(".menu-button")
+    .querySelectorAll(
+      ".menu-button"
+    )
     .forEach(
-      b => b.classList.remove("active")
+      b =>
+        b.classList.remove(
+          "active"
+        )
     );
 
 }
 
 
-function openCategory(cat,btn){
+function openCategory(
+  cat,
+  btn
+){
 
   closePanels();
 
-  btn.classList.add("active");
+
+  btn.classList.add(
+    "active"
+  );
 
 
   document
-    .getElementById(cat.panel)
-    .classList.add("open");
+    .getElementById(
+      cat.panel
+    )
+    .classList.add(
+      "open"
+    );
 
 
-  if(cat.panel === "panel-products"){
+  if(
+    cat.panel ===
+    "panel-products"
+  ){
 
     document.getElementById(
       "productsTitle"
@@ -1732,146 +2326,336 @@ function openCategory(cat,btn){
 
 
 /* =========================
-   PRODUCTOS NORMALES
+   PRODUCTOS
+   SELECCIÓN DIRECTA
 ========================= */
 
-function createStandardList(items, isTaco = false){
+function createStandardList(
+  items,
+  isTaco = false
+){
 
   const c =
     document.getElementById(
       "productsList"
     );
 
+
   c.innerHTML = "";
 
-  [...items].sort((a,b) =>
-    a.localeCompare(b, undefined, { sensitivity:"base" })
-  ).forEach(item => {
 
-    const row =
-      document.createElement("div");
+  [...items]
 
-    row.className = "option-row";
+    .sort(
+      (a,b) =>
+        a.localeCompare(
+          b,
+          undefined,
+          {
+            sensitivity:"base"
+          }
+        )
+    )
 
-    const name =
-      document.createElement("div");
+    .forEach(
+      item => {
 
-    name.className = "option-name";
-    name.textContent = item;
+        const row =
+          document.createElement(
+            "div"
+          );
 
-    const q =
-      document.createElement("div");
 
-    q.className = "quantity";
+        row.className =
+          "option-row";
 
-    const minus =
-      document.createElement("button");
 
-    minus.type = "button";
-    minus.className = "minus";
-    minus.textContent = "−";
-    minus.title = "Quitar uno del pedido";
+        const name =
+          document.createElement(
+            "div"
+          );
 
-    const num =
-      document.createElement("span");
 
-    num.textContent = "0";
+        name.className =
+          "option-name";
 
-    let n = 0;
 
-    const orderType =
-      isTaco ? "Taco" : "Producto";
+        name.textContent =
+          item;
 
-    function updateVisual(){
 
-      num.textContent = n;
+        const q =
+          document.createElement(
+            "div"
+          );
 
-      row.classList.toggle(
-        "selected",
-        n > 0
-      );
 
-    }
+        q.className =
+          "quantity";
 
-    function addOne(){
 
-      n = Math.min(10, n + 1);
+        const minus =
+          document.createElement(
+            "button"
+          );
 
-      addOrderItem(
-        orderType,
-        item,
-        {name:item},
-        {name:item},
-        1
-      );
 
-      updateVisual();
+        minus.type =
+          "button";
 
-    }
 
-    function removeOne(){
+        minus.className =
+          "minus";
 
-      if(n <= 0){
-        return;
-      }
 
-      n--;
+        minus.textContent =
+          "−";
 
-      const key =
-        itemKey(
-          orderType,
-          {name:item}
+
+        const num =
+          document.createElement(
+            "span"
+          );
+
+
+        num.textContent =
+          "0";
+
+
+        let n = 0;
+
+
+        /*
+          El botón menos solo disminuye
+          la cantidad seleccionada.
+        */
+
+        minus.onclick =
+          (e) => {
+
+            e.stopPropagation();
+
+
+            if(
+              n <= 0
+            ){
+
+              return;
+
+            }
+
+
+            n--;
+
+
+            num.textContent =
+              n;
+
+
+            row.classList.toggle(
+              "selected",
+              n > 0
+            );
+
+
+            if(
+              n === 0
+            ){
+
+              removeProductFromOrder(
+                item,
+                isTaco
+              );
+
+            }
+            else{
+
+              setProductQuantity(
+                item,
+                n,
+                isTaco
+              );
+
+            }
+
+          };
+
+
+        /*
+          Toda la tarjeta funciona como botón.
+          Cada toque agrega inmediatamente
+          una unidad al pedido.
+        */
+
+        row.onclick =
+          () => {
+
+            n =
+              Math.min(
+                10,
+                n + 1
+              );
+
+
+            num.textContent =
+              n;
+
+
+            row.classList.add(
+              "selected"
+            );
+
+
+            addOrderItem(
+              isTaco
+                ? "Taco"
+                : "Producto",
+
+              item,
+
+              {
+                name:item
+              },
+
+              {
+                name:item
+              },
+
+              1
+            );
+
+          };
+
+
+        q.append(
+          minus,
+          num
         );
 
-      const existingIndex =
-        order.findIndex(
-          x => x.key === key
+
+        row.append(
+          name,
+          q
         );
 
-      if(existingIndex >= 0){
 
-        order[existingIndex].quantity--;
-
-        if(order[existingIndex].quantity <= 0){
-          order.splice(existingIndex, 1);
-        }
+        c.appendChild(
+          row
+        );
 
       }
-
-      renderOrder();
-      updateVisual();
-
-    }
-
-    minus.onclick = (e) => {
-      e.stopPropagation();
-      removeOne();
-    };
-
-    // Toda la tarjeta agrega inmediatamente una unidad al pedido.
-    row.onclick = () => {
-      addOne();
-    };
-
-    q.append(
-      minus,
-      num
     );
-
-    row.append(
-      name,
-      q
-    );
-
-    c.appendChild(row);
-
-  });
 
 }
 
 
 /* =========================
-   CONFIGURACIÓN INICIAL
+   ACTUALIZAR PRODUCTO
+========================= */
+
+function setProductQuantity(
+  item,
+  quantity,
+  isTaco
+){
+
+  const type =
+    isTaco
+      ? "Taco"
+      : "Producto";
+
+
+  const found =
+    order.find(
+      x =>
+        x.type === type &&
+        x.name === item
+    );
+
+
+  if(found){
+
+    found.quantity =
+      quantity;
+
+  }
+
+
+  renderOrder();
+
+}
+
+
+/* =========================
+   QUITAR PRODUCTO
+========================= */
+
+function removeProductFromOrder(
+  item,
+  isTaco
+){
+
+  const type =
+    isTaco
+      ? "Taco"
+      : "Producto";
+
+
+  order =
+    order.filter(
+      x =>
+        !(
+          x.type === type &&
+          x.name === item
+        )
+    );
+
+
+  renderOrder();
+
+}
+
+
+/* =========================
+   CONTINUAR PEDIDO
+========================= */
+
+function continueOrder(){
+
+  const menu =
+    document.getElementById(
+      "menuCategories"
+    );
+
+
+  if(menu){
+
+    menu.scrollIntoView({
+
+      behavior:"smooth",
+
+      block:"start"
+
+    });
+
+  }
+  else{
+
+    window.scrollTo({
+
+      top:0,
+
+      behavior:"smooth"
+
+    });
+
+  }
+
+}
+
+
+/* =========================
+   CONFIGURACIÓN
 ========================= */
 
 function setup(){
@@ -1882,35 +2666,37 @@ function setup(){
     );
 
 
-  categories.forEach(cat => {
+  categories.forEach(
+    cat => {
 
-    const b =
-      document.createElement("button");
-
-    b.className =
-      "menu-button";
-
-    b.textContent =
-      cat.label;
+      const b =
+        document.createElement(
+          "button"
+        );
 
 
-    b.onclick = () =>
-      openCategory(
-        cat,
+      b.className =
+        "menu-button";
+
+
+      b.textContent =
+        cat.label;
+
+
+      b.onclick =
+        () =>
+          openCategory(
+            cat,
+            b
+          );
+
+
+      mc.appendChild(
         b
       );
 
-
-    mc.appendChild(b);
-
-  });
-
-
-  // Ordenar panes alfabéticamente.
-  const breadList = document.getElementById("breadList");
-  [...breadList.children]
-    .sort((a,b) => a.textContent.localeCompare(b.textContent, undefined, { sensitivity:"base" }))
-    .forEach(b => breadList.appendChild(b));
+    }
+  );
 
 
   createOptions(
@@ -2002,12 +2788,14 @@ function setup(){
 
 
   const soups = [
+
     "Chicken",
     "Beef",
     "Seafood",
     "Mondongo",
     "Pozole",
     "Huevo"
+
   ];
 
 
@@ -2017,46 +2805,68 @@ function setup(){
     );
 
 
-  [...soups].sort((a,b) =>
-    a.localeCompare(b, undefined, { sensitivity:"base" })
-  ).forEach(s => {
+  [...soups]
 
-    const b =
-      document.createElement("button");
-
-    b.className =
-      "choice";
-
-    b.textContent =
-      s;
-
-
-    b.onclick = () => {
-
-      selectedSoup = s;
-
-
-      document
-        .querySelectorAll(
-          "#soupChoices .choice"
+    .sort(
+      (a,b) =>
+        a.localeCompare(
+          b,
+          undefined,
+          {
+            sensitivity:"base"
+          }
         )
-        .forEach(x =>
-          x.classList.remove(
-            "selected"
-          )
+    )
+
+    .forEach(
+      s => {
+
+        const b =
+          document.createElement(
+            "button"
+          );
+
+
+        b.className =
+          "choice";
+
+
+        b.textContent =
+          s;
+
+
+        b.onclick =
+          () => {
+
+            selectedSoup =
+              s;
+
+
+            document
+              .querySelectorAll(
+                "#soupChoices .choice"
+              )
+              .forEach(
+                x =>
+                  x.classList.remove(
+                    "selected"
+                  )
+              );
+
+
+            b.classList.add(
+              "selected"
+            );
+
+          };
+
+
+        sc.appendChild(
+          b
         );
 
-
-      b.classList.add(
-        "selected"
-      );
-
-    };
-
-
-    sc.appendChild(b);
-
-  });
+      }
+    );
 
 
   renderOrder();
@@ -2065,25 +2875,7 @@ function setup(){
 
 
 /* =========================
-   CONTINUAR PEDIDO
-========================= */
-
-function continueOrder(){
-
-  const menu = document.getElementById("menuCategories");
-
-  if(menu){
-    menu.scrollIntoView({
-      behavior:"smooth",
-      block:"start"
-    });
-  }
-
-}
-
-
-/* =========================
-   IMPRIMIR PEDIDO
+   IMPRIMIR
 ========================= */
 
 function printOrder(){
@@ -2095,6 +2887,7 @@ function printOrder(){
     );
 
     return;
+
   }
 
 
@@ -2118,19 +2911,31 @@ function printOrder(){
 
   let html = `
 
-    <h1>PEDIDO #${orderNumber}</h1>
+    <h1>
+      PEDIDO #${orderNumber}
+    </h1>
 
     <hr>
 
     <strong>CLIENTE:</strong>
+
     <br>
-    ${esc(name || "Sin nombre")}
+
+    ${esc(
+      name ||
+      "Sin nombre"
+    )}
 
     <br><br>
 
     <strong>TELÉFONO:</strong>
+
     <br>
-    ${esc(phone || "Sin teléfono")}
+
+    ${esc(
+      phone ||
+      "Sin teléfono"
+    )}
 
     <br>
 
@@ -2139,184 +2944,247 @@ function printOrder(){
   `;
 
 
-  const tacoItems = order
-    .filter(it => it.type === "Taco")
-    .sort((a,b) => a.name.localeCompare(b.name, undefined, { sensitivity:"base" }));
+  const tacoItems =
+    order
 
-  order.forEach(it => {
+      .filter(
+        it =>
+          it.type === "Taco"
+      )
 
-    if(it.type === "Taco") return;
+      .sort(
+        (a,b) =>
+          a.name.localeCompare(
+            b.name,
+            undefined,
+            {
+              sensitivity:"base"
+            }
+          )
+      );
 
-    html += `
-      <strong>
-        ${it.quantity} × ${esc(it.name)}
-      </strong>
-      <br>
-    `;
 
-    if(it.type === "Sándwich"){
+  order.forEach(
+    it => {
 
-      html += `Pan: ${esc(it.details.bread)}<br>`;
-      html += printCat("Queso", it.details.cheese);
-      html += printCat("Carne", it.details.meat);
-      html += printCat("Huevos", it.details.eggs);
-      html += printCat("Salsas", it.details.sauce);
-      html += printCat("Vegetales", it.details.vegetables);
+      if(
+        it.type === "Taco"
+      ){
 
-      if(it.details.notes){
-        html += "Notas: " + esc(it.details.notes) + "<br>";
+        return;
+
       }
 
-    }
-    else if(it.type === "Menú personalizable"){
 
-      html += printCat("Carnes", it.details.meat);
-      html += printCat("Arroz", it.details.rice);
-      html += printCat("Papa", it.details.potato);
-      html += printCat("Frijol", it.details.beans);
-      html += printCat("Otros", it.details.sides);
-      html += printCat("Tortillas", it.details.tortillas);
+      html += `
 
-      if(it.details.notes){
-        html += "Notas: " + esc(it.details.notes) + "<br>";
+        <strong>
+
+          ${it.quantity}
+          ×
+          ${esc(it.name)}
+
+        </strong>
+
+        <br>
+
+      `;
+
+
+      if(
+        it.type === "Sándwich"
+      ){
+
+        html +=
+          `Pan: ${esc(
+            it.details.bread
+          )}<br>`;
+
+
+        html +=
+          printCat(
+            "Queso",
+            it.details.cheese
+          );
+
+
+        html +=
+          printCat(
+            "Carne",
+            it.details.meat
+          );
+
+
+        html +=
+          printCat(
+            "Huevos",
+            it.details.eggs
+          );
+
+
+        html +=
+          printCat(
+            "Salsas",
+            it.details.sauce
+          );
+
+
+        html +=
+          printCat(
+            "Vegetales",
+            it.details.vegetables
+          );
+
+
+        if(
+          it.details.notes
+        ){
+
+          html +=
+            "Notas: " +
+            esc(
+              it.details.notes
+            ) +
+            "<br>";
+
+        }
+
       }
 
-    }
-    else if(it.type === "Sopa"){
+      else if(
+        it.type ===
+        "Menú personalizable"
+      ){
 
-      html += "Sopa: " + esc(it.details.soup) + "<br>";
+        html +=
+          printCat(
+            "Carnes",
+            it.details.meat
+          );
 
-      if(it.details.notes){
-        html += "Notas: " + esc(it.details.notes) + "<br>";
+
+        html +=
+          printCat(
+            "Arroz",
+            it.details.rice
+          );
+
+
+        html +=
+          printCat(
+            "Papa",
+            it.details.potato
+          );
+
+
+        html +=
+          printCat(
+            "Frijol",
+            it.details.beans
+          );
+
+
+        html +=
+          printCat(
+            "Otros",
+            it.details.sides
+          );
+
+
+        html +=
+          printCat(
+            "Tortillas",
+            it.details.tortillas
+          );
+
+
+        if(
+          it.details.notes
+        ){
+
+          html +=
+            "Notas: " +
+            esc(
+              it.details.notes
+            ) +
+            "<br>";
+
+        }
+
       }
 
+      else if(
+        it.type === "Sopa"
+      ){
+
+        html +=
+          "Sopa: " +
+          esc(
+            it.details.soup
+          ) +
+          "<br>";
+
+
+        if(
+          it.details.notes
+        ){
+
+          html +=
+            "Notas: " +
+            esc(
+              it.details.notes
+            ) +
+            "<br>";
+
+        }
+
+      }
+
+
+      html +=
+        "<br><hr>";
+
     }
+  );
 
-    html += "<br><hr>";
 
-  });
+  if(
+    tacoItems.length
+  ){
 
-  if(tacoItems.length){
+    html +=
+      "<strong>🌮 TACOS</strong><br>";
 
-    html += "<strong>🌮 TACOS</strong><br>";
 
-    tacoItems.forEach(it => {
-      html += `${it.quantity} × ${esc(it.name)}<br>`;
-    });
+    tacoItems.forEach(
+      it => {
 
-    html += "<br><hr>";
+        html +=
+          `${it.quantity} × ${esc(it.name)}<br>`;
+
+      }
+    );
+
+
+    html +=
+      "<br><hr>";
 
   }
 
 
   document.getElementById(
     "printArea"
-  ).innerHTML = html;
+  ).innerHTML =
+    html;
 
 
-  // Envío directo a WiFi Browser Print POS mediante wbprint://
-  // La app puente se encarga de enviar ESC/POS a la Volcora.
-  const content = [];
-
-  content.push(`PEDIDO #${orderNumber}`);
-  content.push(`CLIENTE: ${name || "Sin nombre"}`);
-  content.push(`TELÉFONO: ${phone || "Sin teléfono"}`);
-  content.push("------------------------------");
-
-  order.forEach(it => {
-
-    if(it.type === "Taco") return;
-
-    content.push(`${it.quantity} x ${it.name}`);
-
-    if(it.type === "Sándwich"){
-      content.push(`Pan: ${it.details.bread}`);
-      addPrintLines(content, "Queso", it.details.cheese);
-      addPrintLines(content, "Carne", it.details.meat);
-      addPrintLines(content, "Huevos", it.details.eggs);
-      addPrintLines(content, "Salsas", it.details.sauce);
-      addPrintLines(content, "Vegetales", it.details.vegetables);
-      if(it.details.notes) content.push(`Notas: ${it.details.notes}`);
-    }
-    else if(it.type === "Menú personalizable"){
-      addPrintLines(content, "Carnes", it.details.meat);
-      addPrintLines(content, "Arroz", it.details.rice);
-      addPrintLines(content, "Papa", it.details.potato);
-      addPrintLines(content, "Frijol", it.details.beans);
-      addPrintLines(content, "Otros", it.details.sides);
-      addPrintLines(content, "Tortillas", it.details.tortillas);
-      if(it.details.notes) content.push(`Notas: ${it.details.notes}`);
-    }
-    else if(it.type === "Sopa"){
-      content.push(`Sopa: ${it.details.soup}`);
-      if(it.details.notes) content.push(`Notas: ${it.details.notes}`);
-    }
-
-    content.push("------------------------------");
-  });
-
-  if(tacoItems.length){
-    content.push("TACOS");
-    tacoItems.forEach(it => {
-      content.push(`${it.quantity} x ${it.name}`);
-    });
-    content.push("------------------------------");
-  }
-
-  const printData = {
-    printerIp: "192.168.1.28",
-    title: `Pedido #${orderNumber}`,
-    content: content
-  };
-
-  try {
-    const json = JSON.stringify(printData);
-
-    // WiFi Browser Print POS espera: wbprint:// + Base64(JSON).
-    // UTF-8 permite nombres con tildes, ñ y otros caracteres.
-    const bytes = new TextEncoder().encode(json);
-    let binary = "";
-    bytes.forEach(byte => binary += String.fromCharCode(byte));
-    const base64 = btoa(binary);
-    const printUrl = "wbprint://" + base64;
-
-    // En iPad/Safari usamos un enlace explícito para activar el esquema.
-    const link = document.createElement("a");
-    link.href = printUrl;
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    setTimeout(() => link.remove(), 1000);
-
-  } catch(error) {
-    alert("No se pudo enviar el pedido a la impresora.");
-    console.error("Error wbprint:", error);
-  }
-
-}
-
-
-function addPrintLines(target, title, items){
-
-  if(!items || typeof items !== "object") return;
-
-  const entries = Object.entries(items)
-    .filter(([name, quantity]) => Number(quantity) > 0)
-    .sort(([a],[b]) => a.localeCompare(b, undefined, { sensitivity:"base" }));
-
-  if(!entries.length) return;
-
-  target.push(`${title}:`);
-
-  entries.forEach(([name, quantity]) => {
-    target.push(`  ${name} x ${quantity}`);
-  });
+  window.print();
 
 }
 
 
 /* =========================
-   IMPRIMIR CATEGORÍA
+   IMPRIMIR CATEGORÍAS
 ========================= */
 
 function printCat(
@@ -2326,21 +3194,28 @@ function printCat(
 
   const a =
     Object.entries(items)
-      .filter(x => x[1] > 0);
+
+      .filter(
+        x => x[1] > 0
+      );
 
 
   return a.length
 
     ? title +
       ": " +
+
       a
+
         .map(
           x =>
             esc(x[0]) +
             " × " +
             x[1]
         )
+
         .join(", ") +
+
       "<br>"
 
     : "";
