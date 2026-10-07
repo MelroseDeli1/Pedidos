@@ -1,69 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prueba WiFi Browser Print POS</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico WiFi Browser Print POS</title>
 <style>
-  body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:30px;color:#222}
-  .box{max-width:600px;margin:40px auto;background:white;border-radius:18px;padding:28px;box-shadow:0 4px 18px rgba(0,0,0,.12)}
-  h1{font-size:28px;margin-top:0}
-  .info{background:#f1f1f1;border-radius:12px;padding:16px;line-height:1.7;margin:20px 0}
-  button{width:100%;padding:18px;border:0;border-radius:12px;background:#1769e0;color:white;font-size:20px;font-weight:bold;cursor:pointer}
-  .small{font-size:14px;color:#666;margin-top:18px;text-align:center}
+body{font-family:Arial,sans-serif;background:#f4f4f4;margin:0;padding:20px}
+.card{max-width:620px;margin:auto;background:white;border-radius:16px;padding:24px;box-shadow:0 2px 12px #0001}
+h1{font-size:24px;margin-top:0}
+button{width:100%;padding:16px;margin:8px 0;border:0;border-radius:10px;font-size:17px;font-weight:bold}
+.a{background:#111;color:white}.b{background:#ddd}.c{background:#ddd}
+.info{background:#eef6ff;padding:14px;border-radius:10px;line-height:1.5}
+small{color:#666}
 </style>
 </head>
 <body>
-<div class="box">
-  <h1>🖨️ Prueba mínima</h1>
-  <p>Esta página envía un trabajo de prueba mínimo a WiFi Browser Print POS.</p>
+<div class="card">
+<h1>🖨️ Prueba iPad — WiFi Browser Print POS</h1>
 
-  <div class="info">
-    <strong>Impresora:</strong> 192.168.1.28<br>
-    <strong>Puerto:</strong> 9100<br>
-    <strong>Título:</strong> TEST<br>
-    <strong>Contenido:</strong><br>
-    PRUEBA WIFI PRINT<br>
-    HOLA DESDE IPAD
-  </div>
+<div class="info">
+<b>Impresora:</b> 192.168.1.28<br>
+<b>Puerto:</b> 9100<br>
+<b>Texto:</b> PRUEBA IPAD
+</div>
 
-  <button id="printButton">🖨️ ENVIAR PRUEBA</button>
+<p>
+Vamos a probar tres formas del mismo comando. 
+<b>No cambies nada en la impresora.</b>
+</p>
 
-  <div class="small">
-    Safari puede preguntar si quieres abrir “WiFi Browser Print POS”.<br>
-    Toca <strong>Abrir</strong>.
-  </div>
+<button class="a" onclick="enviar('A')">A — FORMATO OFICIAL</button>
+<button class="b" onclick="enviar('B')">B — BASE64 URL-ENCODED</button>
+<button class="c" onclick="enviar('C')">C — BASE64 URL-SAFE</button>
+
+<p><small>
+Después de tocar un botón, Safari preguntará si quieres abrir
+“WiFi Browser Print POS”. Toca “Abrir” y espera unos 5 segundos.
+</small></p>
+
+<div id="resultado"></div>
 </div>
 
 <script>
-function enviarPrueba(){
-  const printData = {
-    printerIp: "192.168.1.28",
-    title: "TEST",
-    content: [
-      "PRUEBA WIFI PRINT",
-      "HOLA DESDE IPAD"
-    ]
-  };
+const datos = {
+  printerIp: "192.168.1.28",
+  title: "TEST",
+  content: [
+    "PRUEBA WIFI PRINT",
+    "HOLA DESDE IPAD"
+  ]
+};
 
-  try {
-    const json = JSON.stringify(printData);
-
-    // Base64 del JSON UTF-8.
-    const base64 = btoa(unescape(encodeURIComponent(json)));
-
-    // Protocolo documentado por WiFi Browser Print POS.
-    const printUrl = "wbprint://" + base64;
-
-    // Navegación directa desde el toque del usuario.
-    window.location.href = printUrl;
-  } catch(error) {
-    alert("Error preparando la prueba: " + error.message);
-    console.error(error);
-  }
+function b64(text){
+  const bytes = new TextEncoder().encode(text);
+  let bin = "";
+  bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
 }
 
-document.getElementById("printButton").addEventListener("click", enviarPrueba);
+function enviar(tipo){
+  const json = JSON.stringify(datos);
+  let base64 = b64(json);
+  let payload = base64;
+
+  if(tipo === 'B'){
+    // Misma Base64, pero con el payload escapado como componente de URL.
+    payload = encodeURIComponent(base64);
+  }
+
+  if(tipo === 'C'){
+    // Variante Base64 URL-safe: sustituye + / y elimina =.
+    payload = base64
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/g, '');
+  }
+
+  const url = "wbprint://" + payload;
+
+  document.getElementById("resultado").innerHTML =
+    "<p><b>Prueba " + tipo + " enviada.</b><br>URL: " +
+    url.substring(0, 45) + "…</p>";
+
+  window.location.href = url;
+}
 </script>
 </body>
 </html>
